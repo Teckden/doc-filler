@@ -96,6 +96,10 @@ export const App = () => {
             </div>
           </div>
         )}
+
+        <div className="flex justify-end">
+          <ExportButton template={template} values={values} onError={setError} />
+        </div>
       </main>
     </div>
   )
