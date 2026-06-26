@@ -69,16 +69,10 @@ export const App = () => {
         <div className="card card-border bg-base-100">
           <div className="card-body gap-4">
             {fields.length > 0 ? (
-              <DynamicForm
-                fields={fields}
-                values={values}
-                onChange={handleFieldChange}
-              />
+              <DynamicForm fields={fields} values={values} onChange={handleFieldChange} />
             ) : (
               <div role="alert" className="alert alert-info">
-                <span>
-                  No fields found in this template. You can still export it unchanged.
-                </span>
+                <span>No fields found in this template. You can still export it unchanged.</span>
               </div>
             )}
           </div>

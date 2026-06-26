@@ -29,30 +29,31 @@ This is the core design constraint, not a feature:
 - The app is built to run offline (PWA) after the initial load.
 - A strict Content-Security-Policy (`connect-src 'none'`, or limited to the app's own origin) blocks any outbound network request at the browser level — including from transitive dependencies.
 
-If you fork or modify this project, **preserve these guarantees** and re-verify them (see *Verifying the privacy guarantee* below).
+If you fork or modify this project, **preserve these guarantees** and re-verify them (see _Verifying the privacy guarantee_ below).
 
 ## Tech stack
 
-| Concern | Choice | Notes |
-|---|---|---|
-| Build tool | **Vite** | Fast dev loop; PWA via `vite-plugin-pwa` |
-| Language | **TypeScript** | Field models as discriminated unions (scalar / loop / conditional) |
-| UI framework | **React** | |
-| Styling | **Tailwind CSS + daisyUI** | App chrome only — kept off the preview pane |
-| Local storage | **Dexie.js** | IndexedDB wrapper; stores template Blobs directly |
-| Template filling | **docx-templates** (MIT) | Fills placeholders, preserves formatting, fully client-side |
-| Document preview | **docx-preview** (MIT) | Renders the filled `.docx` to the DOM |
-| Export | **FileSaver.js** | Cross-browser download of the output Blob |
+| Concern          | Choice                     | Notes                                                              |
+| ---------------- | -------------------------- | ------------------------------------------------------------------ |
+| Build tool       | **Vite**                   | Fast dev loop; PWA via `vite-plugin-pwa`                           |
+| Language         | **TypeScript**             | Field models as discriminated unions (scalar / loop / conditional) |
+| UI framework     | **React**                  |                                                                    |
+| Styling          | **Tailwind CSS + daisyUI** | App chrome only — kept off the preview pane                        |
+| Local storage    | **Dexie.js**               | IndexedDB wrapper; stores template Blobs directly                  |
+| Template filling | **docx-templates** (MIT)   | Fills placeholders, preserves formatting, fully client-side        |
+| Document preview | **docx-preview** (MIT)     | Renders the filled `.docx` to the DOM                              |
+| Export           | **FileSaver.js**           | Cross-browser download of the output Blob                          |
 
 ### A note on the docx library choice
 
 `docx-templates` (MIT) is the default because it is permissively licensed, free including loops and image insertion, and has no paywalled modules — the right fit for a public, source-disclosed project handling sensitive data.
 
 Alternatives, if your needs differ:
+
 - **docxtemplater** — larger ecosystem and a built-in inspect module for field discovery, but its core uses a non-standard license and several modules are commercial. Verify current license terms before relying on any paid module.
 - **easy-template-x** (MIT) — a lighter permissive alternative.
 
-> **Not used:** full WYSIWYG editors like SuperDoc, OnlyOffice, or Collabora. This app is a *fill-the-fields* tool, not a freeform document editor — those are the wrong interaction model here.
+> **Not used:** full WYSIWYG editors like SuperDoc, OnlyOffice, or Collabora. This app is a _fill-the-fields_ tool, not a freeform document editor — those are the wrong interaction model here.
 
 ## How it works
 
@@ -82,6 +83,7 @@ The preview loop is debounced (~300–500ms) so large documents stay responsive 
 ## Getting started
 
 ### Prerequisites
+
 - Node.js (LTS) and a package manager (npm / pnpm / yarn)
 
 ### Install & run

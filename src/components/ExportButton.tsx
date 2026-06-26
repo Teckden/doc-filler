@@ -2,8 +2,7 @@ import { useState } from 'react'
 import { saveAs } from 'file-saver'
 import { fillTemplate } from '../lib/docx'
 
-const DOCX_MIME =
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+const DOCX_MIME = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
 
 type ExportButtonProps = {
   template: { buffer: ArrayBuffer; name: string } | null
