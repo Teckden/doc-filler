@@ -8,9 +8,15 @@ type ExportButtonProps = {
   template: { buffer: ArrayBuffer; name: string } | null
   values: Record<string, string>
   onError: (message: string) => void
+  className?: string
 }
 
-export const ExportButton = ({ template, values, onError }: ExportButtonProps) => {
+export const ExportButton = ({
+  template,
+  values,
+  onError,
+  className = 'btn btn-primary',
+}: ExportButtonProps) => {
   const [exporting, setExporting] = useState(false)
 
   const handleExport = async () => {
@@ -32,11 +38,11 @@ export const ExportButton = ({ template, values, onError }: ExportButtonProps) =
   return (
     <button
       type="button"
-      className="btn btn-primary"
+      className={className}
       disabled={!template || exporting}
       onClick={handleExport}
     >
-      {exporting && <span className="loading loading-spinner"></span>}
+      {exporting && <span className="loading loading-spinner loading-xs"></span>}
       Export .docx
     </button>
   )
