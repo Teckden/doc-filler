@@ -1,9 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 import { UploadIcon } from './icons'
+import { templateDisplayName } from '../i18n/displayName'
 import { useAppState } from '../contexts/AppStateContext'
 import { useTemplates } from '../hooks/useTemplates'
 
+const transComponents = {
+  code: <code className="rounded bg-base-300 px-1 py-0.5 font-mono text-xs" />,
+  b: <span className="font-medium" />,
+}
+
 export const UploadModal = () => {
+  const { t } = useTranslation()
   const { activeModal, closeModal, notify } = useAppState()
   const { add } = useTemplates()
   const open = activeModal?.type === 'upload'
@@ -35,7 +43,7 @@ export const UploadModal = () => {
   const pickFile = (candidate: File | null | undefined) => {
     if (!candidate) return
     if (!candidate.name.toLowerCase().endsWith('.docx')) {
-      setError('Please choose a .docx file.')
+      setError(t('upload.invalidType'))
       setFile(null)
       return
     }
@@ -49,14 +57,14 @@ export const UploadModal = () => {
     try {
       const record = await add(file)
       const count = record.fields.length
-      notify(`Added “${record.name}” — ${count} field${count === 1 ? '' : 's'} detected`)
+      notify(t('upload.added', { name: templateDisplayName(record.name, t), count }))
       reset()
       closeModal()
     } catch (err) {
       setError(
         err instanceof Error
-          ? `Could not parse template: ${err.message}`
-          : 'Could not parse template.',
+          ? t('upload.parseError', { message: err.message })
+          : t('upload.parseErrorGeneric'),
       )
       setBusy(false)
     }
@@ -72,14 +80,13 @@ export const UploadModal = () => {
       }}
     >
       <div className="modal-box bg-base-100">
-        <h3 className="text-[15px] font-semibold">Add a template</h3>
+        <h3 className="text-[15px] font-semibold">{t('upload.title')}</h3>
         <p className="mt-1 text-[13px] leading-relaxed text-base-content/65">
-          Upload a <code className="rounded bg-base-300 px-1 py-0.5 font-mono text-xs">.docx</code>{' '}
-          with{' '}
-          <code className="rounded bg-base-300 px-1 py-0.5 font-mono text-xs">
-            {'{{placeholders}}'}
-          </code>
-          . The fields are detected automatically.
+          <Trans
+            i18nKey="upload.body"
+            components={transComponents}
+            values={{ token: '{{placeholders}}' }}
+          />
         </p>
 
         <label
@@ -103,14 +110,14 @@ export const UploadModal = () => {
             accept=".docx"
             className="sr-only"
             onChange={(event) => pickFile(event.target.files?.[0])}
-            aria-label="Choose a .docx template"
+            aria-label={t('upload.choose')}
           />
           <UploadIcon className="size-7 text-base-content/45" />
           {file ? (
             <span className="text-sm font-medium">{file.name}</span>
           ) : (
             <span className="text-sm text-base-content/65">
-              Drag a <span className="font-medium">.docx</span> here, or click to browse
+              <Trans i18nKey="upload.dropzone" components={transComponents} />
             </span>
           )}
         </label>
@@ -130,7 +137,7 @@ export const UploadModal = () => {
               closeModal()
             }}
           >
-            Cancel
+            {t('common.cancel')}
           </button>
           <button
             type="button"
@@ -139,13 +146,13 @@ export const UploadModal = () => {
             onClick={handleAdd}
           >
             {busy && <span className="loading loading-spinner loading-xs"></span>}
-            Add template
+            {t('upload.add')}
           </button>
         </div>
       </div>
 
       <form method="dialog" className="modal-backdrop">
-        <button aria-label="Close">close</button>
+        <button aria-label={t('common.close')}>{t('common.close')}</button>
       </form>
     </dialog>
   )

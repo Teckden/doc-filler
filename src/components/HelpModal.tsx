@@ -1,22 +1,64 @@
-import { useRef } from 'react'
+import { useRef, type ReactNode } from 'react'
+import { Trans, useTranslation } from 'react-i18next'
 
-const SAMPLE = `Dear {{client_name}},
+// Kept out of the i18next pipeline: the {{tokens}} must render verbatim, so the
+// sample is selected by language here rather than interpolated.
+const SAMPLE: Record<'en' | 'uk', string> = {
+  en: `Dear {{client_name}},
 
 This confirms invoice {{invoice_no}} for the amount
 of {{amount}}, due on {{due_date}}.
 
-Issued by {{issuer_name}}.`
+Issued by {{issuer_name}}.`,
+  uk: `Шановний(а) {{client_name}},
+
+Це підтверджує рахунок {{invoice_no}} на суму
+{{amount}}, з оплатою до {{due_date}}.
+
+Виставлено: {{issuer_name}}.`,
+}
+
+const transComponents = {
+  code: <code className="rounded bg-base-300 px-1 py-0.5 font-mono text-xs" />,
+  b: <span className="font-medium" />,
+}
 
 export const HelpModal = () => {
+  const { t, i18n } = useTranslation()
   const dialogRef = useRef<HTMLDialogElement>(null)
+  const sample = i18n.resolvedLanguage === 'uk' ? SAMPLE.uk : SAMPLE.en
+
+  const steps: { step: string; title: string; body: ReactNode }[] = [
+    {
+      step: '1',
+      title: t('help.step1Title'),
+      body: (
+        <Trans
+          i18nKey="help.step1Body"
+          components={transComponents}
+          values={{ token: '{{client_name}}' }}
+        />
+      ),
+    },
+    {
+      step: '2',
+      title: t('help.step2Title'),
+      body: <Trans i18nKey="help.step2Body" components={transComponents} />,
+    },
+    {
+      step: '3',
+      title: t('help.step3Title'),
+      body: <Trans i18nKey="help.step3Body" components={transComponents} />,
+    },
+  ]
 
   return (
     <>
-      <div className="tooltip tooltip-bottom" data-tip="How to use DocFiller">
+      <div className="tooltip tooltip-bottom" data-tip={t('help.title')}>
         <button
           type="button"
           className="btn btn-circle btn-ghost btn-sm text-base-content/70 hover:text-primary"
-          aria-label="How to use DocFiller"
+          aria-label={t('help.title')}
           onClick={() => dialogRef.current?.showModal()}
         >
           <svg
@@ -42,7 +84,7 @@ export const HelpModal = () => {
           <form method="dialog">
             <button
               className="btn btn-circle btn-ghost btn-sm absolute right-3 top-3"
-              aria-label="Close"
+              aria-label={t('common.close')}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -59,53 +101,14 @@ export const HelpModal = () => {
           </form>
 
           <header className="pr-8">
-            <h3 className="text-[15px] font-semibold">How to use DocFiller</h3>
+            <h3 className="text-[15px] font-semibold">{t('help.title')}</h3>
             <p className="mt-1 text-[13px] leading-relaxed opacity-65">
-              Turn a Word document with placeholders into a fillable form, then export a finished{' '}
-              <code className="rounded bg-base-300 px-1 py-0.5 font-mono text-xs">.docx</code>.
+              <Trans i18nKey="help.intro" components={transComponents} />
             </p>
           </header>
 
           <ol className="mt-5 grid gap-4 sm:grid-cols-3">
-            {[
-              {
-                step: '1',
-                title: 'Add placeholders',
-                body: (
-                  <>
-                    In your Word file, wrap each variable in double curly braces, e.g.{' '}
-                    <code className="rounded bg-base-300 px-1 py-0.5 font-mono text-xs">
-                      {'{{client_name}}'}
-                    </code>
-                    . Use letters, numbers, and underscores.
-                  </>
-                ),
-              },
-              {
-                step: '2',
-                title: 'Upload & fill',
-                body: (
-                  <>
-                    Upload the <span className="font-medium">.docx</span>. DocFiller detects every
-                    placeholder and builds a labeled text field for each one.
-                  </>
-                ),
-              },
-              {
-                step: '3',
-                title: 'Export',
-                body: (
-                  <>
-                    Fill the fields and click <span className="font-medium">Export .docx</span> to
-                    download a copy named{' '}
-                    <code className="rounded bg-base-300 px-1 py-0.5 font-mono text-xs">
-                      filled-…docx
-                    </code>{' '}
-                    with your values inserted.
-                  </>
-                ),
-              },
-            ].map(({ step, title, body }) => (
+            {steps.map(({ step, title, body }) => (
               <li key={step} className="rounded-box border border-base-300 bg-base-200 p-4">
                 <div className="flex items-center gap-2">
                   <span className="grid size-6 place-items-center rounded-full bg-primary text-[12px] font-semibold text-primary-content">
@@ -121,46 +124,42 @@ export const HelpModal = () => {
           <div className="mt-6 grid gap-6 md:grid-cols-2">
             <section>
               <h4 className="text-[11px] font-semibold uppercase tracking-[0.1em] opacity-60">
-                Placeholder syntax
+                {t('help.syntaxTitle')}
               </h4>
               <pre className="mt-2 overflow-x-auto rounded-box border border-base-300 bg-base-200 p-4 font-mono text-[12.5px] leading-relaxed">
-                {SAMPLE}
+                {sample}
               </pre>
               <p className="mt-2 text-[12.5px] leading-relaxed opacity-65">
-                Each unique placeholder becomes one field. Repeat the same{' '}
-                <code className="rounded bg-base-300 px-1 py-0.5 font-mono text-[11px]">
-                  {'{{name}}'}
-                </code>{' '}
-                anywhere in the document and every occurrence is filled with the same value.
+                <Trans
+                  i18nKey="help.syntaxNote"
+                  components={transComponents}
+                  values={{ token: '{{name}}' }}
+                />
               </p>
             </section>
 
             <section>
               <h4 className="text-[11px] font-semibold uppercase tracking-[0.1em] opacity-60">
-                Supported field types
+                {t('help.typesTitle')}
               </h4>
               <div className="mt-2 overflow-x-auto rounded-box border border-base-300">
                 <table className="table table-sm">
                   <thead>
                     <tr>
-                      <th>Type</th>
-                      <th>How it works</th>
+                      <th>{t('help.typesColType')}</th>
+                      <th>{t('help.typesColHow')}</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="font-medium">Text</td>
-                      <td className="opacity-75">
-                        The only type today. Whatever you type is inserted exactly as-is.
-                      </td>
+                      <td className="font-medium">{t('help.typesText')}</td>
+                      <td className="opacity-75">{t('help.typesTextDesc')}</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
               <p className="mt-2 text-[12.5px] leading-relaxed opacity-65">
-                Dates, numbers, and currency are entered as plain text — type them the way they
-                should appear (e.g. <span className="font-medium">Jun 22, 2026</span> or{' '}
-                <span className="font-medium">$1,250.00</span>).
+                <Trans i18nKey="help.typesNote" components={transComponents} />
               </p>
             </section>
           </div>
@@ -168,48 +167,34 @@ export const HelpModal = () => {
           <div className="mt-6 grid gap-6 md:grid-cols-2">
             <section>
               <h4 className="text-[11px] font-semibold uppercase tracking-[0.1em] opacity-60">
-                Good to know
+                {t('help.knowTitle')}
               </h4>
               <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[12.5px] leading-relaxed opacity-75">
                 <li>
-                  Variable names are case-sensitive —{' '}
-                  <code className="rounded bg-base-300 px-1 py-0.5 font-mono text-[11px]">
-                    {'{{Name}}'}
-                  </code>{' '}
-                  and{' '}
-                  <code className="rounded bg-base-300 px-1 py-0.5 font-mono text-[11px]">
-                    {'{{name}}'}
-                  </code>{' '}
-                  are different fields.
+                  <Trans
+                    i18nKey="help.knowCaseSensitive"
+                    components={transComponents}
+                    values={{ a: '{{Name}}', b: '{{name}}' }}
+                  />
                 </li>
-                <li>Leaving a field blank inserts nothing — it won&apos;t block export.</li>
+                <li>{t('help.knowBlank')}</li>
+                <li>{t('help.knowOnePass')}</li>
                 <li>
-                  Type each placeholder in one pass so Word doesn&apos;t split it or swap in “smart
-                  quotes”; either can stop it being detected.
+                  <Trans i18nKey="help.knowDocxOnly" components={transComponents} />
                 </li>
-                <li>
-                  Only <span className="font-medium">.docx</span> files are accepted.
-                </li>
-                <li>
-                  Templates are stored locally in your browser and persist across reloads — upload
-                  several and switch between them from the top bar.
-                </li>
+                <li>{t('help.knowLocal')}</li>
               </ul>
             </section>
 
             <section>
               <h4 className="text-[11px] font-semibold uppercase tracking-[0.1em] opacity-60">
-                Not supported yet
+                {t('help.notSupportedTitle')}
               </h4>
               <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[12.5px] leading-relaxed opacity-75">
+                <li>{t('help.notSupportedLoops')}</li>
+                <li>{t('help.notSupportedPreview')}</li>
                 <li>
-                  Loops / repeating rows, conditional sections, and image placeholders are skipped —
-                  they won&apos;t appear as fields.
-                </li>
-                <li>No live preview yet, and field values aren&apos;t saved between sessions.</li>
-                <li>
-                  <span className="font-medium">.dotx</span> templates and PDF export aren&apos;t
-                  available.
+                  <Trans i18nKey="help.notSupportedFormats" components={transComponents} />
                 </li>
               </ul>
             </section>
@@ -217,13 +202,13 @@ export const HelpModal = () => {
 
           <div className="modal-action">
             <form method="dialog">
-              <button className="btn btn-sm">Close</button>
+              <button className="btn btn-sm">{t('common.close')}</button>
             </form>
           </div>
         </div>
 
         <form method="dialog" className="modal-backdrop">
-          <button aria-label="Close">close</button>
+          <button aria-label={t('common.close')}>{t('common.close')}</button>
         </form>
       </dialog>
     </>

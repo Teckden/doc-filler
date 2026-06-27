@@ -1,27 +1,29 @@
+import { useTranslation } from 'react-i18next'
 import type { StoredTemplate } from '../db/templates'
+import { templateDisplayName } from '../i18n/displayName'
 import { useTemplates } from '../hooks/useTemplates'
 import { useAppState } from '../contexts/AppStateContext'
 import { PencilIcon, PlusIcon, TrashIcon } from './icons'
-
-const fieldCount = (n: number) => `${n} field${n === 1 ? '' : 's'}`
 
 const closeDropdown = () => {
   if (document.activeElement instanceof HTMLElement) document.activeElement.blur()
 }
 
 export const TemplateList = () => {
+  const { t } = useTranslation()
   const { templates, activeTemplate, select, remove } = useTemplates()
   const { openModal, notify } = useAppState()
 
   const handleDelete = async (template: StoredTemplate) => {
     await remove(template.id)
-    notify(`Deleted “${template.name}”`)
+    notify(t('templates.deleted', { name: templateDisplayName(template.name, t) }))
   }
 
   return (
     <>
       {templates.map((template) => {
         const isActive = template.id === activeTemplate?.id
+        const name = templateDisplayName(template.name, t)
         return (
           <li
             key={template.id}
@@ -29,7 +31,7 @@ export const TemplateList = () => {
           >
             <div
               className="tooltip tooltip-bottom list-col-grow before:max-w-[15rem] before:whitespace-normal before:break-words"
-              data-tip={template.name}
+              data-tip={name}
             >
               <button
                 type="button"
@@ -42,17 +44,17 @@ export const TemplateList = () => {
                 <div
                   className={`line-clamp-2 break-words text-[13px] ${isActive ? 'font-semibold text-primary' : 'font-medium'}`}
                 >
-                  {template.name}
+                  {name}
                 </div>
                 <div className="text-[10px] text-base-content/55">
-                  {fieldCount(template.fields.length)}
+                  {t('templates.fieldCount', { count: template.fields.length })}
                 </div>
               </button>
             </div>
             <button
               type="button"
               className="btn btn-square btn-ghost btn-sm text-base-content/55 hover:text-base-content"
-              aria-label={`Rename ${template.name}`}
+              aria-label={t('templates.rename', { name })}
               onClick={(event) => {
                 event.stopPropagation()
                 openModal({ type: 'rename', templateId: template.id })
@@ -64,7 +66,7 @@ export const TemplateList = () => {
             <button
               type="button"
               className="btn btn-square btn-ghost btn-sm text-base-content/55 hover:text-error"
-              aria-label={`Delete ${template.name}`}
+              aria-label={t('templates.delete', { name })}
               onClick={(event) => {
                 event.stopPropagation()
                 handleDelete(template)
@@ -87,7 +89,7 @@ export const TemplateList = () => {
           }}
         >
           <PlusIcon className="size-4" />
-          Upload template
+          {t('templates.upload')}
         </button>
       </li>
     </>

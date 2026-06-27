@@ -1,8 +1,10 @@
+import { useTranslation } from 'react-i18next'
 import { useFieldValues } from '../contexts/FieldValuesContext'
 
 // Consumes field values directly so it re-renders on each keystroke without
 // dragging the rest of the workspace with it.
 export const ProgressBar = ({ fields }: { fields: string[] }) => {
+  const { t } = useTranslation()
   const { values } = useFieldValues()
   const filled = fields.filter((field) => (values[field] ?? '').trim() !== '').length
   const progress = fields.length === 0 ? 0 : Math.round((filled / fields.length) * 100)
@@ -16,7 +18,7 @@ export const ProgressBar = ({ fields }: { fields: string[] }) => {
         />
       </div>
       <span className="shrink-0 text-[11px] tabular-nums text-base-content/55">
-        {filled} of {fields.length} filled
+        {t('progress.filled', { filled, total: fields.length })}
       </span>
     </div>
   )

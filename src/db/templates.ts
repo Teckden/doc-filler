@@ -50,7 +50,7 @@ export const addTemplate = async (file: File): Promise<StoredTemplate> => {
   const now = Date.now()
   const record: StoredTemplate = {
     id: crypto.randomUUID(),
-    name: stripExtension(file.name) || 'Untitled template',
+    name: stripExtension(file.name),
     blob: new Blob([buffer], { type: file.type }),
     fields,
     createdAt: now,
@@ -67,11 +67,8 @@ export const listTemplates = (): Promise<StoredTemplate[]> =>
 
 export const getTemplate = (id: string): Promise<StoredTemplate | undefined> => db.templates.get(id)
 
-// Strip a trailing .docx the same way addTemplate does, so the stored name is
-// always extension-free (export appends one .docx — no doubling). Fall back like
-// addTemplate so a name of just ".docx" can't persist as empty.
 export const renameTemplate = async (id: string, name: string): Promise<void> => {
-  const cleaned = stripExtension(name).trim() || 'Untitled template'
+  const cleaned = stripExtension(name).trim()
   await db.templates.update(id, { name: cleaned, updatedAt: Date.now() })
 }
 

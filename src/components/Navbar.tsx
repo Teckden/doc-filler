@@ -1,4 +1,6 @@
+import { useTranslation } from 'react-i18next'
 import { ThemeToggle } from './ThemeToggle'
+import { LanguageMenu } from './LanguageMenu'
 import { HelpModal } from './HelpModal'
 import { TemplateSwitcher } from './TemplateSwitcher'
 import { TemplateList } from './TemplateList'
@@ -7,6 +9,7 @@ import { useTheme } from '../hooks/useTheme'
 import { useTemplates } from '../hooks/useTemplates'
 
 export const Navbar = () => {
+  const { t } = useTranslation()
   const [theme, setTheme] = useTheme()
   const { activeTemplate } = useTemplates()
 
@@ -24,6 +27,7 @@ export const Navbar = () => {
 
       <div className="flex-1" />
       <HelpModal />
+      <LanguageMenu />
 
       {/* Desktop: inline theme switcher */}
       <div className="hidden sm:block">
@@ -36,7 +40,7 @@ export const Navbar = () => {
           tabIndex={0}
           role="button"
           className="btn btn-circle btn-ghost btn-sm"
-          aria-label="Open menu"
+          aria-label={t('navbar.openMenu')}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -59,14 +63,14 @@ export const Navbar = () => {
           className="dropdown-content z-50 mt-2 max-h-[75vh] w-64 overflow-y-auto rounded-box border border-base-300 bg-base-100 p-3 shadow-lg"
         >
           <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider opacity-60">
-            Theme
+            {t('navbar.theme')}
           </p>
           <ThemeToggle theme={theme} onChange={setTheme} />
           {activeTemplate && (
             <>
               <div className="my-3 h-px bg-base-300" />
               <p className="mb-1 text-[11px] font-semibold uppercase tracking-wider opacity-60">
-                Templates
+                {t('navbar.templates')}
               </p>
               <ul className="list">
                 <TemplateList />
@@ -77,7 +81,9 @@ export const Navbar = () => {
       </div>
 
       {activeTemplate && <div className="mx-1 hidden h-6 w-px bg-base-300 sm:block" />}
-      {activeTemplate && <ExportButton className="btn btn-primary btn-sm gap-1.5 font-medium" />}
+      {activeTemplate && (
+        <ExportButton compact className="btn btn-primary btn-sm gap-1.5 font-medium" />
+      )}
     </nav>
   )
 }

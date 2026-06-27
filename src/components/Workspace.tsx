@@ -1,4 +1,6 @@
+import { Trans, useTranslation } from 'react-i18next'
 import { useTemplates } from '../hooks/useTemplates'
+import { templateDisplayName } from '../i18n/displayName'
 import { DynamicForm } from './DynamicForm'
 import { ExportButton } from './ExportButton'
 import { ProgressBar } from './ProgressBar'
@@ -6,6 +8,7 @@ import { ProgressBar } from './ProgressBar'
 // The fill-form area for the active template. Reads template data from the data
 // hook; the values themselves live in FieldValuesContext (consumed by the children).
 export const Workspace = () => {
+  const { t } = useTranslation()
   const { activeTemplate } = useTemplates()
   if (!activeTemplate) return null
 
@@ -14,10 +17,19 @@ export const Workspace = () => {
   return (
     <div className="@container mx-auto w-full max-w-[880px] px-6 py-8 sm:px-10">
       <header className="space-y-1">
-        <h1 className="text-[15px] font-semibold">Fill in document fields</h1>
+        <h1 className="text-[15px] font-semibold">{t('workspace.title')}</h1>
         <p className="text-[12.5px] text-base-content/60">
-          Enter a value for each field detected in <span className="font-medium">{name}</span>, then
-          export.
+          <Trans
+            i18nKey="workspace.subtitle"
+            components={{ b: <span className="font-medium" /> }}
+            values={{ name: templateDisplayName(name, t) }}
+            // The name is dynamic user data and the only interpolated value here, so
+            // escape it (escapeValue) and have Trans decode it back (shouldUnescape).
+            // Without this a literal '<' in the name garbles under the global
+            // escapeValue:false needed for the <b> markup.
+            shouldUnescape
+            tOptions={{ interpolation: { escapeValue: true } }}
+          />
         </p>
       </header>
 
@@ -28,7 +40,7 @@ export const Workspace = () => {
           <DynamicForm fields={fields} />
         ) : (
           <div role="alert" className="alert alert-info">
-            <span>No fields found in this template. You can still export it unchanged.</span>
+            <span>{t('workspace.noFields')}</span>
           </div>
         )}
       </div>

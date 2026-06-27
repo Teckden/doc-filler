@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useAppState } from '../contexts/AppStateContext'
 import { useTemplates } from '../hooks/useTemplates'
 
 // The target is looked up from the templates data (not carried in context), so only
 // its id lives in the active-modal state.
 export const RenameModal = () => {
+  const { t } = useTranslation()
   const { activeModal, closeModal } = useAppState()
   const { templates, rename } = useTemplates()
 
@@ -42,9 +44,9 @@ export const RenameModal = () => {
   return (
     <dialog ref={dialogRef} className="modal" onClose={closeModal}>
       <div className="modal-box bg-base-100">
-        <h3 className="text-[15px] font-semibold">Rename template</h3>
+        <h3 className="text-[15px] font-semibold">{t('rename.title')}</h3>
         <fieldset className="fieldset">
-          <legend className="fieldset-legend">Name</legend>
+          <legend className="fieldset-legend">{t('rename.name')}</legend>
           <input
             className="input w-full"
             type="text"
@@ -62,7 +64,7 @@ export const RenameModal = () => {
 
         <div className="modal-action">
           <button type="button" className="btn btn-ghost btn-sm" onClick={closeModal}>
-            Cancel
+            {t('common.cancel')}
           </button>
           <button
             type="button"
@@ -70,13 +72,13 @@ export const RenameModal = () => {
             disabled={!name.trim()}
             onClick={() => void save()}
           >
-            Save
+            {t('common.save')}
           </button>
         </div>
       </div>
 
       <form method="dialog" className="modal-backdrop">
-        <button aria-label="Close">close</button>
+        <button aria-label={t('common.close')}>{t('common.close')}</button>
       </form>
     </dialog>
   )
