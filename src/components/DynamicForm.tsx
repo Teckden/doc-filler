@@ -1,23 +1,21 @@
-type DynamicFormProps = {
-  fields: string[]
-  values: Record<string, string>
-  onChange: (field: string, value: string) => void
-}
+import { useFieldValues } from '../contexts/FieldValuesContext'
 
-export const DynamicForm = ({ fields, values, onChange }: DynamicFormProps) => {
+export const DynamicForm = ({ fields }: { fields: string[] }) => {
+  const { values, setValue } = useFieldValues()
+
   return (
-    <div className="flex flex-col gap-3">
+    <div className="grid grid-cols-1 gap-x-6 gap-y-2 @[34rem]:grid-cols-2">
       {fields.map((field) => (
-        <label key={field} className="floating-label">
-          <span>{field}</span>
+        <fieldset key={field} className="fieldset">
+          <legend className="fieldset-legend">{field}</legend>
           <input
-            className="input input-md w-full"
+            className="input w-full"
             type="text"
             placeholder={field}
             value={values[field] ?? ''}
-            onChange={(event) => onChange(field, event.target.value)}
+            onChange={(event) => setValue(field, event.target.value)}
           />
-        </label>
+        </fieldset>
       ))}
     </div>
   )

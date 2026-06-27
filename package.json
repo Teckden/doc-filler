@@ -13,6 +13,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "dexie": "^4.4.4",
+    "dexie-react-hooks": "^4.4.0",
     "docx-templates": "^4.15.0",
     "file-saver": "^2.0.5",
     "react": "^19.2.7",

@@ -190,6 +190,10 @@ export const HelpModal = () => {
                 <li>
                   Only <span className="font-medium">.docx</span> files are accepted.
                 </li>
+                <li>
+                  Templates are stored locally in your browser and persist across reloads — upload
+                  several and switch between them from the top bar.
+                </li>
               </ul>
             </section>
 
@@ -202,7 +206,7 @@ export const HelpModal = () => {
                   Loops / repeating rows, conditional sections, and image placeholders are skipped —
                   they won&apos;t appear as fields.
                 </li>
-                <li>One template at a time; no saving, multiple templates, or live preview.</li>
+                <li>No live preview yet, and field values aren&apos;t saved between sessions.</li>
                 <li>
                   <span className="font-medium">.dotx</span> templates and PDF export aren&apos;t
                   available.
