@@ -3,6 +3,7 @@ import { TemplateUpload } from './components/TemplateUpload'
 import { DynamicForm } from './components/DynamicForm'
 import { ExportButton } from './components/ExportButton'
 import { Navbar } from './components/Navbar'
+import { Footer } from './components/Footer'
 import { extractFields } from './lib/docx'
 import { useTheme } from './hooks/useTheme'
 
@@ -101,6 +102,8 @@ export const App = () => {
           <ExportButton template={template} values={values} onError={setError} />
         </div>
       </main>
+
+      <Footer />
     </div>
   )
 }
