@@ -11,14 +11,19 @@ export const TemplateSwitcher = () => {
   if (!activeTemplate) return null
 
   const name = templateDisplayName(activeTemplate.name, t)
+  const showTooltip = name.length > 22
 
   return (
     <div className="dropdown">
       <div
         tabIndex={0}
         role="button"
-        className="tooltip tooltip-bottom btn btn-ghost h-auto min-h-0 w-56 flex-nowrap gap-2 px-2 py-1.5 font-normal before:max-w-[15rem] before:whitespace-normal before:break-words"
-        data-tip={name}
+        className={`btn btn-ghost h-auto min-h-0 w-56 flex-nowrap gap-2 px-2 py-1.5 font-normal${
+          showTooltip
+            ? ' tooltip tooltip-bottom before:max-w-[15rem] before:whitespace-normal before:break-words'
+            : ''
+        }`}
+        data-tip={showTooltip ? name : undefined}
         aria-label={t('templates.switch', { name })}
       >
         {/* Fixed-width trigger: the name column fills and truncates so a long title

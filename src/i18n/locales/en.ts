@@ -47,6 +47,12 @@ export const en = {
   progress: {
     filled: '{{filled}} of {{total}} filled',
   },
+  clear: {
+    button: 'Clear',
+    title: 'Clear all fields?',
+    body: 'This removes every value entered for this template, ready for the next document. The template itself stays.',
+    confirm: 'Clear fields',
+  },
   upload: {
     title: 'Add a template',
     body: 'Upload a <code>.docx</code> with <code>{{token}}</code>. The fields are detected automatically.',

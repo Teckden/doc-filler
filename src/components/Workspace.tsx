@@ -3,6 +3,7 @@ import { useTemplates } from '../hooks/useTemplates'
 import { templateDisplayName } from '../i18n/displayName'
 import { DynamicForm } from './DynamicForm'
 import { ExportButton } from './ExportButton'
+import { ClearButton } from './ClearButton'
 import { ProgressBar } from './ProgressBar'
 
 // The fill-form area for the active template. Reads template data from the data
@@ -45,7 +46,8 @@ export const Workspace = () => {
         )}
       </div>
 
-      <div className="mt-8 flex justify-end">
+      <div className="mt-8 flex justify-end gap-2">
+        {fields.length > 0 && <ClearButton />}
         <ExportButton className="btn btn-primary gap-1.5" />
       </div>
     </div>
