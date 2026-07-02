@@ -21,11 +21,22 @@ interface MetaRow {
   value: string
 }
 
+// Per-template field answers, keyed by templateId (one row per template). Kept in
+// its own table rather than on StoredTemplate so switching/listing templates
+// never drags the answer maps around, and a template's answers cascade-delete
+// with it.
+export interface StoredFieldValues {
+  templateId: string
+  values: Record<string, string>
+  updatedAt: number
+}
+
 const ACTIVE_ID_KEY = 'activeTemplateId'
 
 class DocFillerDB extends Dexie {
   templates!: Table<StoredTemplate, string>
   meta!: Table<MetaRow, string>
+  fieldValues!: Table<StoredFieldValues, string>
 
   constructor() {
     super('docfiller')
@@ -34,6 +45,12 @@ class DocFillerDB extends Dexie {
     this.version(1).stores({
       templates: 'id, createdAt, name',
       meta: 'key',
+    })
+    // Schema v2 — purely additive. Dexie carries v1 tables forward unchanged; we
+    // only declare the new fieldValues table. Existing template/meta data stays
+    // intact with no migration logic.
+    this.version(2).stores({
+      fieldValues: 'templateId',
     })
   }
 }
@@ -72,8 +89,27 @@ export const renameTemplate = async (id: string, name: string): Promise<void> =>
   await db.templates.update(id, { name: cleaned, updatedAt: Date.now() })
 }
 
+// Cascade-deletes the template and its field values in one transaction so a
+// crash mid-delete can't leave an orphaned answer row behind.
 export const deleteTemplate = async (id: string): Promise<void> => {
-  await db.templates.delete(id)
+  await db.transaction('rw', db.templates, db.fieldValues, async () => {
+    await db.templates.delete(id)
+    await db.fieldValues.delete(id)
+  })
+}
+
+export const getFieldValues = async (templateId: string): Promise<Record<string, string>> =>
+  (await db.fieldValues.get(templateId))?.values ?? {}
+
+export const saveFieldValues = async (
+  templateId: string,
+  values: Record<string, string>,
+): Promise<void> => {
+  await db.fieldValues.put({ templateId, values, updatedAt: Date.now() })
+}
+
+export const deleteFieldValues = async (templateId: string): Promise<void> => {
+  await db.fieldValues.delete(templateId)
 }
 
 export const getActiveTemplateId = async (): Promise<string | undefined> =>
