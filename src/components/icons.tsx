@@ -78,6 +78,13 @@ export const CheckIcon = ({ className }: IconProps) => (
   </svg>
 )
 
+export const PanelRightIcon = ({ className }: IconProps) => (
+  <svg {...base(className)}>
+    <rect x="3.75" y="4.5" width="16.5" height="15" rx="1.5" />
+    <path strokeLinecap="round" d="M14.25 4.5v15" />
+  </svg>
+)
+
 export const DownloadIcon = ({ className }: IconProps) => (
   <svg {...base(className)}>
     <path

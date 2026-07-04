@@ -47,6 +47,13 @@ export const en = {
   progress: {
     filled: '{{filled}} of {{total}} filled',
   },
+  preview: {
+    show: 'Show preview',
+    hide: 'Hide preview',
+    title: 'Live preview',
+    exportReady: 'Export ready',
+    failed: 'Could not render a preview of this template.',
+  },
   clear: {
     button: 'Clear',
     title: 'Clear all fields?',
@@ -112,7 +119,6 @@ export const en = {
     notSupportedTitle: 'Not supported yet',
     notSupportedLoops:
       "Loops / repeating rows, conditional sections, and image placeholders are skipped — they won't appear as fields.",
-    notSupportedPreview: "No live preview yet, and field values aren't saved between sessions.",
     notSupportedFormats: "<b>.dotx</b> templates and PDF export aren't available.",
   },
 } as const

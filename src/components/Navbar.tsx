@@ -5,16 +5,22 @@ import { HelpModal } from './HelpModal'
 import { TemplateSwitcher } from './TemplateSwitcher'
 import { TemplateList } from './TemplateList'
 import { ExportButton } from './ExportButton'
+import { PanelRightIcon } from './icons'
 import { useTheme } from '../hooks/useTheme'
 import { useTemplates } from '../hooks/useTemplates'
 
-export const Navbar = () => {
+type NavbarProps = {
+  previewVisible: boolean
+  onTogglePreview: () => void
+}
+
+export const Navbar = ({ previewVisible, onTogglePreview }: NavbarProps) => {
   const { t } = useTranslation()
   const [theme, setTheme] = useTheme()
   const { activeTemplate } = useTemplates()
 
   return (
-    <nav className="flex h-14 shrink-0 items-center gap-2 border-b border-base-300 bg-base-100 px-3 sm:gap-2.5 sm:px-4">
+    <nav className="relative z-30 flex h-14 shrink-0 items-center gap-2 border-b border-base-300 bg-base-100 px-3 sm:gap-2.5 sm:px-4">
       <div className="flex items-center gap-2.5">
         <div className="grid size-7 place-items-center rounded bg-primary text-[11px] font-bold tracking-tight text-primary-content">
           DF
@@ -26,6 +32,20 @@ export const Navbar = () => {
       <div className="hidden sm:block">{activeTemplate && <TemplateSwitcher />}</div>
 
       <div className="flex-1" />
+
+      {activeTemplate && (
+        <button
+          type="button"
+          className="btn btn-ghost btn-sm gap-1.5 hidden lg:flex"
+          onClick={onTogglePreview}
+          title={t(previewVisible ? 'preview.hide' : 'preview.show')}
+          aria-pressed={previewVisible}
+        >
+          <PanelRightIcon className="size-4 opacity-70" />
+          <span>{t(previewVisible ? 'preview.hide' : 'preview.show')}</span>
+        </button>
+      )}
+
       <HelpModal />
       <LanguageMenu />
 
@@ -82,7 +102,10 @@ export const Navbar = () => {
 
       {activeTemplate && <div className="mx-1 hidden h-6 w-px bg-base-300 sm:block" />}
       {activeTemplate && (
-        <ExportButton compact className="btn btn-primary btn-sm gap-1.5 font-medium" />
+        <ExportButton
+          compact
+          className="btn btn-primary btn-sm gap-1.5 font-medium hidden lg:flex"
+        />
       )}
     </nav>
   )

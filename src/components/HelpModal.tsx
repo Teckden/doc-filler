@@ -192,7 +192,6 @@ export const HelpModal = () => {
               </h4>
               <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[12.5px] leading-relaxed opacity-75">
                 <li>{t('help.notSupportedLoops')}</li>
-                <li>{t('help.notSupportedPreview')}</li>
                 <li>
                   <Trans i18nKey="help.notSupportedFormats" components={transComponents} />
                 </li>

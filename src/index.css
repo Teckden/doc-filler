@@ -69,6 +69,37 @@
   --noise: 0;
 }
 
+/* Preview document pages. docx-preview runs with inWrapper:false, so the page
+   chrome (background, border, shadow) is ours; the two skins mirror the design's
+   paper/softened page styles. The color rules only catch text the document
+   leaves uncolored — explicit run colors from the .docx still win. */
+.preview-doc section.docx {
+  margin: 0 auto 24px;
+  border-radius: 2px;
+  border: 1px solid rgb(0 0 0 / 0.08);
+}
+.preview-doc section.docx:last-child {
+  margin-bottom: 0;
+}
+.preview-doc-paper .docx {
+  color: #1b1f24;
+}
+.preview-doc-paper section.docx {
+  background: #fff;
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.1),
+    0 18px 44px rgb(0 0 0 / 0.16);
+}
+.preview-doc-soft .docx {
+  color: #2b2823;
+}
+.preview-doc-soft section.docx {
+  background: #ece7dd;
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 0.18),
+    0 18px 44px rgb(0 0 0 / 0.3);
+}
+
 /* Thinner focus seam on form controls: half the default outline width, no offset. */
 .input:focus,
 .input:focus-within,
