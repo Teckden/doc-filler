@@ -13,16 +13,16 @@ export const ThemeToggle = ({ theme, onChange }: ThemeToggleProps) => {
     <div className="join overflow-hidden rounded-md border border-base-300">
       <button
         type="button"
-        className={`btn join-item btn-sm border-0 ${theme === 'gov-light' ? 'btn-primary' : 'btn-ghost'}`}
-        onClick={() => onChange('gov-light')}
+        className={`btn join-item btn-sm border-0 ${theme === 'light' ? 'btn-primary' : 'btn-ghost'}`}
+        onClick={() => onChange('light')}
         title={t('theme.lightTitle')}
       >
         {t('theme.light')}
       </button>
       <button
         type="button"
-        className={`btn join-item btn-sm border-0 ${theme === 'gov-dark' ? 'btn-primary' : 'btn-ghost'}`}
-        onClick={() => onChange('gov-dark')}
+        className={`btn join-item btn-sm border-0 ${theme === 'dark' ? 'btn-primary' : 'btn-ghost'}`}
+        onClick={() => onChange('dark')}
         title={t('theme.darkTitle')}
       >
         {t('theme.dark')}

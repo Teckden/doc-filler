@@ -2,7 +2,7 @@
 @plugin "daisyui";
 
 @plugin "daisyui/theme" {
-  name: 'gov-light';
+  name: 'light';
   default: true;
   color-scheme: light;
   --color-base-100: oklch(98% 0 0);
@@ -33,10 +33,14 @@
   --border: 1px;
   --depth: 0;
   --noise: 0;
+
+  --preview-doc-bg: #fff;
+  --preview-doc-fg: #1b1f24;
+  --preview-doc-shadow: 0 1px 2px rgb(0 0 0 / 0.1), 0 18px 44px rgb(0 0 0 / 0.16);
 }
 
 @plugin "daisyui/theme" {
-  name: 'gov-dark';
+  name: 'dark';
   prefersdark: true;
   color-scheme: dark;
   --color-base-100: oklch(27% 0.02 250);
@@ -67,37 +71,25 @@
   --border: 1px;
   --depth: 0;
   --noise: 0;
+
+  --preview-doc-bg: #ece7dd;
+  --preview-doc-fg: #2b2823;
+  --preview-doc-shadow: 0 1px 2px rgb(0 0 0 / 0.18), 0 18px 44px rgb(0 0 0 / 0.3);
 }
 
-/* Preview document pages. docx-preview runs with inWrapper:false, so the page
-   chrome (background, border, shadow) is ours; the two skins mirror the design's
-   paper/softened page styles. The color rules only catch text the document
-   leaves uncolored — explicit run colors from the .docx still win. */
+/* Overrides docx-preview's injected `.docx { color: black }`; explicit run colors still win. */
+.preview-doc .docx {
+  color: var(--preview-doc-fg);
+}
 .preview-doc section.docx {
   margin: 0 auto 24px;
   border-radius: 2px;
   border: 1px solid rgb(0 0 0 / 0.08);
+  background: var(--preview-doc-bg);
+  box-shadow: var(--preview-doc-shadow);
 }
 .preview-doc section.docx:last-child {
   margin-bottom: 0;
-}
-.preview-doc-paper .docx {
-  color: #1b1f24;
-}
-.preview-doc-paper section.docx {
-  background: #fff;
-  box-shadow:
-    0 1px 2px rgb(0 0 0 / 0.1),
-    0 18px 44px rgb(0 0 0 / 0.16);
-}
-.preview-doc-soft .docx {
-  color: #2b2823;
-}
-.preview-doc-soft section.docx {
-  background: #ece7dd;
-  box-shadow:
-    0 1px 2px rgb(0 0 0 / 0.18),
-    0 18px 44px rgb(0 0 0 / 0.3);
 }
 
 /* Thinner focus seam on form controls: half the default outline width, no offset. */

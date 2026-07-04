@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 
-export type Theme = 'gov-light' | 'gov-dark'
+export type Theme = 'light' | 'dark'
 
 const STORAGE_KEY = 'docfiller.theme'
-const THEMES: Theme[] = ['gov-light', 'gov-dark']
+const THEMES: Theme[] = ['light', 'dark']
 
 const readStoredTheme = (): Theme => {
   const stored = localStorage.getItem(STORAGE_KEY)
-  return THEMES.includes(stored as Theme) ? (stored as Theme) : 'gov-light'
+  return THEMES.includes(stored as Theme) ? (stored as Theme) : 'light'
 }
 
 export const useTheme = () => {

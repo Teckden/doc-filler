@@ -11,7 +11,7 @@ const DEFAULT_LOCALE: Locale = 'en'
 const isLocale = (value: string | null): value is Locale =>
   value !== null && (SUPPORTED_LOCALES as readonly string[]).includes(value)
 
-// First visit defaults to English (like the theme defaults to gov-light); after
+// First visit defaults to English (like the theme defaults to light); after
 // that the stored choice always wins. No navigator.language detection by design.
 const readStoredLocale = (): Locale => {
   const stored = localStorage.getItem(STORAGE_KEY)
