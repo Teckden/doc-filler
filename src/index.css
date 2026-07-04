@@ -91,6 +91,11 @@
 .preview-doc section.docx:last-child {
   margin-bottom: 0;
 }
+/* Word resolves shading per cell (fill="auto" = no fill), but docx-preview paints
+   table-level shading on <table>, letting it bleed through transparent cells. */
+.preview-doc table {
+  background-color: transparent !important;
+}
 
 /* Thinner focus seam on form controls: half the default outline width, no offset. */
 .input:focus,
