@@ -21,15 +21,17 @@ export const extractFields = async (template: ArrayBuffer): Promise<string[]> =>
   return fields
 }
 
-// Renders the template with the supplied values. rejectNullish stays false so a
-// blank or missing field becomes an empty string instead of throwing.
+// Renders the template with the supplied values. Every field must be present in
+// the data: docx-templates evaluates each placeholder as a JS identifier, and an
+// absent name throws ReferenceError — so unfilled fields default to ''.
 export const fillTemplate = async (
   template: ArrayBuffer,
-  data: Record<string, string>,
+  fields: string[],
+  values: Record<string, string>,
 ): Promise<Uint8Array> => {
   return createReport({
     template: new Uint8Array(template),
-    data,
+    data: Object.fromEntries(fields.map((field) => [field, values[field] ?? ''])),
     cmdDelimiter: CMD_DELIMITER,
     rejectNullish: false,
   })

@@ -31,7 +31,7 @@ export const ExportButton = ({
     setExporting(true)
     try {
       const buffer = await activeTemplate.blob.arrayBuffer()
-      const report = await fillTemplate(buffer, values)
+      const report = await fillTemplate(buffer, activeTemplate.fields, values)
       // docx-templates types the result's buffer as the wider ArrayBufferLike;
       // in the browser it's always a plain ArrayBuffer, safe for a Blob.
       const blob = new Blob([report as Uint8Array<ArrayBuffer>], { type: DOCX_MIME })
