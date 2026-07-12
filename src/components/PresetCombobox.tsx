@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useAppState } from '../contexts/AppStateContext'
 import { useFieldValues } from '../contexts/FieldValuesContext'
-import { setPresetChoice, type StoredPreset } from '../db/presets'
-import { BookmarkIcon } from './icons'
+import { setPresetChoice, updatePreset, type StoredPreset } from '../db/presets'
+import { BookmarkIcon, PlusIcon } from './icons'
 
 type PresetComboboxProps = {
   field: string
@@ -15,6 +16,7 @@ type PresetComboboxProps = {
 // manual entry), and source chips when several presets bind to the same name.
 export const PresetCombobox = ({ field, matched, chosenId }: PresetComboboxProps) => {
   const { t } = useTranslation()
+  const { notify } = useAppState()
   const { values, setValue } = useFieldValues()
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
@@ -36,6 +38,16 @@ export const PresetCombobox = ({ field, matched, chosenId }: PresetComboboxProps
   const commit = (next: string) => {
     setValue(field, next)
     close()
+  }
+  const commitAndAdd = async (next: string) => {
+    await updatePreset(active.id, {
+      name: active.name,
+      fieldKey: active.fieldKey,
+      allowManual: active.allowManual,
+      options: [...active.options, next],
+    })
+    notify(t('presets.addedTo', { name: active.name }))
+    commit(next)
   }
 
   return (
@@ -125,14 +137,26 @@ export const PresetCombobox = ({ field, matched, chosenId }: PresetComboboxProps
                 )}
               </div>
 
-              {active.allowManual && query && !exactMatch && (
-                <button
-                  type="button"
-                  className="mt-0.5 border-t border-base-300 px-2.5 py-2 text-left text-[13px] hover:bg-base-200"
-                  onClick={() => commit(query)}
-                >
-                  {t('presets.useCustom', { value: query })}
-                </button>
+              {active.allowManual && query.trim() && !exactMatch && (
+                <>
+                  <button
+                    type="button"
+                    className="mt-0.5 break-words border-t border-base-300 px-2.5 py-2 text-left text-[13px] text-primary hover:bg-base-200"
+                    onClick={() => commit(query.trim())}
+                  >
+                    {t('presets.useCustom', { value: query.trim() })}
+                  </button>
+                  <button
+                    type="button"
+                    className="flex items-start gap-1.5 rounded-md px-2.5 py-2 text-left text-base text-primary hover:bg-base-200"
+                    onClick={() => void commitAndAdd(query.trim())}
+                  >
+                    <PlusIcon className="mt-0.5 size-3.5 shrink-0" />
+                    <span className="min-w-0 break-words">
+                      {t('presets.useAndAdd', { name: active.name })}
+                    </span>
+                  </button>
+                </>
               )}
 
               {hasValue && (

@@ -132,6 +132,8 @@ export const en = {
     searchPlaceholder: 'Search, or type a custom value…',
     noMatch: 'No matching option',
     useCustom: 'Use custom value: “{{value}}”',
+    useAndAdd: 'Use and add to “{{name}}”',
+    addedTo: 'Added to “{{name}}”',
     clearValue: 'Clear value',
     custom: 'custom',
     pickOne_one: '{{count}} preset matches — pick one',
