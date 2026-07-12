@@ -23,8 +23,8 @@ export const DeletePresetDialog = ({ preset, onCancel, onConfirm }: DeletePreset
   return createPortal(
     <dialog ref={dialogRef} className="modal" onClose={onCancel}>
       <div className="modal-box max-w-md bg-base-100">
-        <h3 className="text-[15px] font-semibold text-error">{t('presets.deleteTitle')}</h3>
-        <p className="mt-1.5 text-[13px] leading-relaxed opacity-70">
+        <h3 className="text-base font-semibold text-error">{t('presets.deleteTitle')}</h3>
+        <p className="mt-1.5 text-sm leading-relaxed opacity-70">
           {t('presets.deleteBody', { name: preset?.name ?? '' })}
         </p>
         <div className="modal-action">

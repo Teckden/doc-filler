@@ -101,20 +101,20 @@ export const PresetsHelpModal = () => {
         </form>
 
         <header className="pr-8">
-          <h3 className="text-[15px] font-semibold">{t('presetsHelp.title')}</h3>
-          <p className="mt-1 text-[13px] leading-relaxed opacity-65">{t('presetsHelp.intro')}</p>
+          <h3 className="text-base font-semibold">{t('presetsHelp.title')}</h3>
+          <p className="mt-1 text-sm leading-relaxed opacity-65">{t('presetsHelp.intro')}</p>
         </header>
 
         <ol className="mt-5 grid gap-4 sm:grid-cols-3">
           {steps.map(({ step, title, body }) => (
             <li key={step} className="rounded-box border border-base-300 bg-base-200 p-4">
               <div className="flex items-center gap-2">
-                <span className="grid size-6 place-items-center rounded-full bg-primary text-[12px] font-semibold text-primary-content">
+                <span className="grid size-6 place-items-center rounded-full bg-primary text-sm font-semibold text-primary-content">
                   {step}
                 </span>
-                <h4 className="text-[13.5px] font-semibold">{title}</h4>
+                <h4 className="text-sm font-semibold">{title}</h4>
               </div>
-              <p className="mt-2 text-[13px] leading-relaxed opacity-70">{body}</p>
+              <p className="mt-2 text-sm leading-relaxed opacity-70">{body}</p>
             </li>
           ))}
         </ol>
@@ -122,10 +122,10 @@ export const PresetsHelpModal = () => {
         {sections.map(({ title, body, image, alt }) => (
           <section key={title} className="mt-6 grid items-start gap-5 md:grid-cols-2">
             <div>
-              <h4 className="text-[11px] font-semibold uppercase tracking-[0.1em] opacity-60">
+              <h4 className="text-xs font-semibold uppercase tracking-[0.1em] opacity-60">
                 {title}
               </h4>
-              <p className="mt-2 text-[12.5px] leading-relaxed opacity-75">{body}</p>
+              <p className="mt-2 text-sm leading-relaxed opacity-75">{body}</p>
             </div>
             <img src={image} alt={alt} className="w-full rounded-box border border-base-300" />
           </section>
@@ -133,23 +133,21 @@ export const PresetsHelpModal = () => {
 
         <section className="mt-6 grid items-start gap-5 md:grid-cols-2">
           <div>
-            <h4 className="text-[11px] font-semibold uppercase tracking-[0.1em] opacity-60">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.1em] opacity-60">
               {t('presetsHelp.yamlTitle')}
             </h4>
-            <p className="mt-2 text-[12.5px] leading-relaxed opacity-75">
-              {t('presetsHelp.yamlBody')}
-            </p>
+            <p className="mt-2 text-sm leading-relaxed opacity-75">{t('presetsHelp.yamlBody')}</p>
           </div>
-          <pre className="overflow-x-auto rounded-box border border-base-300 bg-base-200 p-4 font-mono text-[12px] leading-relaxed">
+          <pre className="overflow-x-auto rounded-box border border-base-300 bg-base-200 p-4 font-mono text-sm leading-relaxed">
             {sample}
           </pre>
         </section>
 
         <section className="mt-6">
-          <h4 className="text-[11px] font-semibold uppercase tracking-[0.1em] opacity-60">
+          <h4 className="text-xs font-semibold uppercase tracking-[0.1em] opacity-60">
             {t('presetsHelp.knowTitle')}
           </h4>
-          <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[12.5px] leading-relaxed opacity-75">
+          <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm leading-relaxed opacity-75">
             <li>{t('presetsHelp.know1')}</li>
             <li>{t('presetsHelp.know2')}</li>
             <li>{t('presetsHelp.know3')}</li>

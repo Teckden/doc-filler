@@ -18,13 +18,13 @@ export const PresetCard = ({ preset, sharedName, onEdit, onDelete }: PresetCardP
     <div className="flex flex-col gap-2.5 rounded-box border border-base-300 bg-base-100 p-3.5">
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <div className="truncate text-[13.5px] font-semibold">{preset.name}</div>
-          <div className="mt-0.5 flex flex-wrap items-center gap-1.5 text-[11.5px] opacity-60">
+          <div className="truncate text-sm font-semibold">{preset.name}</div>
+          <div className="mt-0.5 flex flex-wrap items-center gap-1.5 text-xs opacity-60">
             <span>
               <Trans
                 i18nKey="presets.bindsTo"
                 components={{
-                  code: <code className="rounded bg-base-200 px-1 py-0.5 text-[11px]" />,
+                  code: <code className="rounded bg-base-200 px-1 py-0.5 text-xs" />,
                 }}
                 values={{ key: preset.fieldKey }}
                 shouldUnescape
@@ -55,18 +55,18 @@ export const PresetCard = ({ preset, sharedName, onEdit, onDelete }: PresetCardP
       {preset.options.length > 0 && (
         <div className="flex flex-wrap gap-1">
           {preset.options.slice(0, CHIP_LIMIT).map((option) => (
-            <span key={option} className="badge badge-ghost badge-sm text-[11.5px] font-normal">
+            <span key={option} className="badge badge-ghost badge-sm text-xs font-normal">
               {option}
             </span>
           ))}
           {preset.options.length > CHIP_LIMIT && (
-            <span className="badge badge-ghost badge-sm text-[11.5px] font-normal opacity-60">
+            <span className="badge badge-ghost badge-sm text-xs font-normal opacity-60">
               {t('presets.more', { count: preset.options.length - CHIP_LIMIT })}
             </span>
           )}
         </div>
       )}
-      <div className="flex items-center gap-2 text-[11px] opacity-55">
+      <div className="flex items-center gap-2 text-xs opacity-55">
         <span className="tabular-nums">
           {t('presets.optionCount', { count: preset.options.length })}
         </span>

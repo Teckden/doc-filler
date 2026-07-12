@@ -13,13 +13,11 @@ export const PreviewPane = ({ template }: { template: StoredTemplate }) => {
   return (
     <section className="min-w-0 flex-1 overflow-y-auto bg-base-300/70">
       <div className="sticky top-0 z-10 flex h-11 items-center justify-between border-b border-base-content/5 bg-base-300/80 px-6 backdrop-blur">
-        <span className="text-[11px] font-medium uppercase tracking-[0.1em] opacity-55">
+        <span className="text-xs font-medium uppercase tracking-[0.1em] opacity-55">
           {t('preview.title')}
         </span>
         {status === 'ready' && (
-          <span className="hidden text-[11px] opacity-50 md:inline">
-            {t('preview.exportReady')}
-          </span>
+          <span className="hidden text-xs opacity-50 md:inline">{t('preview.exportReady')}</span>
         )}
       </div>
 
@@ -31,7 +29,7 @@ export const PreviewPane = ({ template }: { template: StoredTemplate }) => {
             </div>
           )}
           {status === 'error' && (
-            <div role="alert" className="alert alert-error text-[13px]">
+            <div role="alert" className="alert alert-error text-sm">
               <span>{t('preview.failed')}</span>
             </div>
           )}

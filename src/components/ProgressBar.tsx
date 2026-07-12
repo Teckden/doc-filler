@@ -17,7 +17,7 @@ export const ProgressBar = ({ fields }: { fields: string[] }) => {
           style={{ width: `${progress}%` }}
         />
       </div>
-      <span className="shrink-0 text-[11px] tabular-nums text-base-content/55">
+      <span className="shrink-0 text-xs tabular-nums text-base-content/55">
         {t('progress.filled', { filled, total: fields.length })}
       </span>
     </div>

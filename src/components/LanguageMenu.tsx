@@ -33,7 +33,7 @@ export const LanguageMenu = () => {
         aria-label={t('language.label')}
       >
         <GlobeIcon className="size-4 text-base-content/70" />
-        <span className="hidden text-[13px] sm:inline">{LOCALE_LABELS[current].short}</span>
+        <span className="hidden text-sm sm:inline">{LOCALE_LABELS[current].short}</span>
         <ChevronDownIcon className="size-3.5 text-base-content/55" />
       </div>
       <ul

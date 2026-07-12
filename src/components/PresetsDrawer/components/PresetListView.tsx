@@ -67,7 +67,7 @@ export const PresetListView = ({
 
       <div className="flex flex-1 flex-col gap-2.5 overflow-y-auto p-3">
         {!loading && presets.length === 0 && (
-          <p className="px-1 py-2 text-[12.5px] leading-relaxed opacity-55">{t('presets.empty')}</p>
+          <p className="px-1 py-2 text-sm leading-relaxed opacity-55">{t('presets.empty')}</p>
         )}
         {presets.map((preset) => (
           <PresetCard

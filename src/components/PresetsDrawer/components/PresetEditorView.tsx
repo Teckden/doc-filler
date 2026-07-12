@@ -31,7 +31,7 @@ export const PresetEditorView = ({
   return (
     <>
       <div className="flex flex-1 flex-col gap-4 overflow-y-auto p-4">
-        <div className="text-[12px] font-semibold uppercase tracking-[0.1em] opacity-60">
+        <div className="text-sm font-semibold uppercase tracking-[0.1em] opacity-60">
           {t(draft.id ? 'presets.editTitle' : 'presets.newTitle')}
         </div>
         <fieldset className="fieldset">
@@ -59,14 +59,12 @@ export const PresetEditorView = ({
               <option key={field} value={field} />
             ))}
           </datalist>
-          <p className="mt-1 text-[11.5px] leading-relaxed opacity-55">
-            {t('presets.fieldKeyHelp')}
-          </p>
+          <p className="mt-1 text-xs leading-relaxed opacity-55">{t('presets.fieldKeyHelp')}</p>
         </fieldset>
         <fieldset className="fieldset">
           <legend className="fieldset-legend flex w-full items-center justify-between">
             <span>{t('presets.options')}</span>
-            <span className="text-[10.5px] font-normal tabular-nums opacity-45">
+            <span className="text-xs font-normal tabular-nums opacity-45">
               {t('presets.optionCount', { count: parseDraftOptions(draft.optionsText).length })}
             </span>
           </legend>
@@ -76,7 +74,7 @@ export const PresetEditorView = ({
             onChange={(event) => onPatch({ optionsText: event.target.value })}
             placeholder={t('presets.optionsPlaceholder')}
           />
-          <p className="mt-1 text-[11.5px] opacity-55">{t('presets.optionsHelp')}</p>
+          <p className="mt-1 text-xs opacity-55">{t('presets.optionsHelp')}</p>
         </fieldset>
         <label className="flex cursor-pointer items-center gap-3 rounded-md border border-base-300 bg-base-100 px-3 py-2.5">
           <input
@@ -86,8 +84,8 @@ export const PresetEditorView = ({
             onChange={(event) => onPatch({ allowManual: event.target.checked })}
           />
           <span className="min-w-0">
-            <span className="block text-[13.5px]">{t('presets.allowManual')}</span>
-            <span className="block text-[11.5px] opacity-55">{t('presets.allowManualHelp')}</span>
+            <span className="block text-sm">{t('presets.allowManual')}</span>
+            <span className="block text-xs opacity-55">{t('presets.allowManualHelp')}</span>
           </span>
         </label>
       </div>

@@ -101,8 +101,8 @@ export const HelpModal = () => {
           </form>
 
           <header className="pr-8">
-            <h3 className="text-[15px] font-semibold">{t('help.title')}</h3>
-            <p className="mt-1 text-[13px] leading-relaxed opacity-65">
+            <h3 className="text-base font-semibold">{t('help.title')}</h3>
+            <p className="mt-1 text-sm leading-relaxed opacity-65">
               <Trans i18nKey="help.intro" components={transComponents} />
             </p>
           </header>
@@ -111,25 +111,25 @@ export const HelpModal = () => {
             {steps.map(({ step, title, body }) => (
               <li key={step} className="rounded-box border border-base-300 bg-base-200 p-4">
                 <div className="flex items-center gap-2">
-                  <span className="grid size-6 place-items-center rounded-full bg-primary text-[12px] font-semibold text-primary-content">
+                  <span className="grid size-6 place-items-center rounded-full bg-primary text-sm font-semibold text-primary-content">
                     {step}
                   </span>
-                  <h4 className="text-[13.5px] font-semibold">{title}</h4>
+                  <h4 className="text-sm font-semibold">{title}</h4>
                 </div>
-                <p className="mt-2 text-[13px] leading-relaxed opacity-70">{body}</p>
+                <p className="mt-2 text-sm leading-relaxed opacity-70">{body}</p>
               </li>
             ))}
           </ol>
 
           <div className="mt-6 grid gap-6 md:grid-cols-2">
             <section>
-              <h4 className="text-[11px] font-semibold uppercase tracking-[0.1em] opacity-60">
+              <h4 className="text-xs font-semibold uppercase tracking-[0.1em] opacity-60">
                 {t('help.syntaxTitle')}
               </h4>
-              <pre className="mt-2 overflow-x-auto rounded-box border border-base-300 bg-base-200 p-4 font-mono text-[12.5px] leading-relaxed">
+              <pre className="mt-2 overflow-x-auto rounded-box border border-base-300 bg-base-200 p-4 font-mono text-sm leading-relaxed">
                 {sample}
               </pre>
-              <p className="mt-2 text-[12.5px] leading-relaxed opacity-65">
+              <p className="mt-2 text-sm leading-relaxed opacity-65">
                 <Trans
                   i18nKey="help.syntaxNote"
                   components={transComponents}
@@ -139,7 +139,7 @@ export const HelpModal = () => {
             </section>
 
             <section>
-              <h4 className="text-[11px] font-semibold uppercase tracking-[0.1em] opacity-60">
+              <h4 className="text-xs font-semibold uppercase tracking-[0.1em] opacity-60">
                 {t('help.typesTitle')}
               </h4>
               <div className="mt-2 overflow-x-auto rounded-box border border-base-300">
@@ -158,7 +158,7 @@ export const HelpModal = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="mt-2 text-[12.5px] leading-relaxed opacity-65">
+              <p className="mt-2 text-sm leading-relaxed opacity-65">
                 <Trans i18nKey="help.typesNote" components={transComponents} />
               </p>
             </section>
@@ -166,10 +166,10 @@ export const HelpModal = () => {
 
           <div className="mt-6 grid gap-6 md:grid-cols-2">
             <section>
-              <h4 className="text-[11px] font-semibold uppercase tracking-[0.1em] opacity-60">
+              <h4 className="text-xs font-semibold uppercase tracking-[0.1em] opacity-60">
                 {t('help.knowTitle')}
               </h4>
-              <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[12.5px] leading-relaxed opacity-75">
+              <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm leading-relaxed opacity-75">
                 <li>
                   <Trans
                     i18nKey="help.knowCaseSensitive"
@@ -187,10 +187,10 @@ export const HelpModal = () => {
             </section>
 
             <section>
-              <h4 className="text-[11px] font-semibold uppercase tracking-[0.1em] opacity-60">
+              <h4 className="text-xs font-semibold uppercase tracking-[0.1em] opacity-60">
                 {t('help.notSupportedTitle')}
               </h4>
-              <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[12.5px] leading-relaxed opacity-75">
+              <ul className="mt-2 list-disc space-y-1.5 pl-5 text-sm leading-relaxed opacity-75">
                 <li>{t('help.notSupportedLoops')}</li>
                 <li>
                   <Trans i18nKey="help.notSupportedFormats" components={transComponents} />

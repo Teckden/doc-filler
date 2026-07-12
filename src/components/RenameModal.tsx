@@ -44,7 +44,7 @@ export const RenameModal = () => {
   return (
     <dialog ref={dialogRef} className="modal" onClose={closeModal}>
       <div className="modal-box bg-base-100">
-        <h3 className="text-[15px] font-semibold">{t('rename.title')}</h3>
+        <h3 className="text-base font-semibold">{t('rename.title')}</h3>
         <fieldset className="fieldset">
           <legend className="fieldset-legend">{t('rename.name')}</legend>
           <input

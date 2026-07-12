@@ -42,11 +42,11 @@ export const TemplateList = () => {
                 }}
               >
                 <div
-                  className={`line-clamp-2 break-words text-[13px] ${isActive ? 'font-semibold text-primary' : 'font-medium'}`}
+                  className={`line-clamp-2 break-words text-sm ${isActive ? 'font-semibold text-primary' : 'font-medium'}`}
                 >
                   {name}
                 </div>
-                <div className="text-[10px] text-base-content/55">
+                <div className="text-xs text-base-content/55">
                   {t('templates.fieldCount', { count: template.fields.length })}
                 </div>
               </button>

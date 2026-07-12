@@ -10,8 +10,8 @@ export const DrawerHeader = ({ onClose }: { onClose: () => void }) => {
     <div className="flex h-14 shrink-0 items-center gap-3 border-b border-base-300 px-4">
       <BookmarkIcon className="size-4.5 shrink-0 text-primary" />
       <div className="min-w-0 flex-1">
-        <div className="text-[14px] font-semibold leading-tight">{t('presets.title')}</div>
-        <div className="text-[11px] leading-tight opacity-55">{t('presets.subtitle')}</div>
+        <div className="text-sm font-semibold leading-tight">{t('presets.title')}</div>
+        <div className="text-xs leading-tight opacity-55">{t('presets.subtitle')}</div>
       </div>
       <button
         type="button"

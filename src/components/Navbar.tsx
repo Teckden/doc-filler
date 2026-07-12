@@ -26,10 +26,10 @@ export const Navbar = ({ previewVisible, onTogglePreview }: NavbarProps) => {
   return (
     <nav className="relative z-30 flex h-14 shrink-0 items-center gap-2 border-b border-base-300 bg-base-100 px-3 sm:gap-2.5 sm:px-4">
       <div className="flex items-center gap-2.5">
-        <div className="grid size-7 place-items-center rounded bg-primary text-[11px] font-bold tracking-tight text-primary-content">
+        <div className="grid size-7 place-items-center rounded bg-primary text-xs font-bold tracking-tight text-primary-content">
           DF
         </div>
-        <span className="text-[13px] font-semibold">DocFiller</span>
+        <span className="text-sm font-semibold">DocFiller</span>
       </div>
 
       {activeTemplate && <div className="mx-1 hidden h-6 w-px bg-base-300 sm:block" />}
@@ -103,14 +103,14 @@ export const Navbar = ({ previewVisible, onTogglePreview }: NavbarProps) => {
           tabIndex={0}
           className="dropdown-content z-50 mt-2 max-h-[75vh] w-64 overflow-y-auto rounded-box border border-base-300 bg-base-100 p-3 shadow-lg"
         >
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider opacity-60">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wider opacity-60">
             {t('navbar.theme')}
           </p>
           <ThemeToggle theme={theme} onChange={setTheme} />
           {activeTemplate && (
             <>
               <div className="my-3 h-px bg-base-300" />
-              <p className="mb-1 text-[11px] font-semibold uppercase tracking-wider opacity-60">
+              <p className="mb-1 text-xs font-semibold uppercase tracking-wider opacity-60">
                 {t('navbar.templates')}
               </p>
               <ul className="list">

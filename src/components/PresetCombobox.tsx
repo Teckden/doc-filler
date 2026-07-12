@@ -54,7 +54,7 @@ export const PresetCombobox = ({ field, matched, chosenId }: PresetComboboxProps
     <fieldset className="fieldset">
       <legend className="fieldset-legend">
         <span>{field}</span>
-        <span className="inline-flex items-center gap-1 rounded bg-primary/10 px-1.5 py-0.5 text-[10.5px] font-medium normal-case text-primary">
+        <span className="inline-flex items-center gap-1 rounded bg-primary/10 px-1.5 py-0.5 text-xs font-medium normal-case text-primary">
           <BookmarkIcon className="size-2.5" />
           {active.name}
         </span>
@@ -73,7 +73,7 @@ export const PresetCombobox = ({ field, matched, chosenId }: PresetComboboxProps
             {isCustomValue && (
               <span className="badge badge-ghost badge-xs font-normal">{t('presets.custom')}</span>
             )}
-            <span className="text-[10px] opacity-45">▼</span>
+            <span className="text-xs opacity-45">▼</span>
           </span>
         </button>
 
@@ -83,7 +83,7 @@ export const PresetCombobox = ({ field, matched, chosenId }: PresetComboboxProps
             <div className="absolute top-full z-30 mt-1 flex w-full flex-col gap-1 rounded-box border border-base-300 bg-base-100 p-1.5 shadow-xl">
               {matched.length > 1 && (
                 <div className="mb-0.5 border-b border-base-300 px-1 pb-1.5 pt-0.5">
-                  <div className="mb-1 text-[10px] uppercase tracking-wider opacity-50">
+                  <div className="mb-1 text-xs uppercase tracking-wider opacity-50">
                     {t('presets.pickOne', { count: matched.length })}
                   </div>
                   <div className="flex flex-wrap gap-1">
@@ -125,15 +125,15 @@ export const PresetCombobox = ({ field, matched, chosenId }: PresetComboboxProps
                   <button
                     key={option}
                     type="button"
-                    className={`flex items-center justify-between gap-2 rounded-md px-2.5 py-2 text-left text-[13.5px] hover:bg-base-200 ${option === value ? 'bg-primary/10 font-medium text-primary' : ''}`}
+                    className={`flex items-center justify-between gap-2 rounded-md px-2.5 py-2 text-left text-sm hover:bg-base-200 ${option === value ? 'bg-primary/10 font-medium text-primary' : ''}`}
                     onClick={() => commit(option)}
                   >
                     <span className="truncate">{option}</span>
-                    {option === value && <span className="text-[13px] text-primary">✓</span>}
+                    {option === value && <span className="text-sm text-primary">✓</span>}
                   </button>
                 ))}
                 {filtered.length === 0 && (
-                  <div className="px-2.5 py-2 text-[12.5px] opacity-45">{t('presets.noMatch')}</div>
+                  <div className="px-2.5 py-2 text-sm opacity-45">{t('presets.noMatch')}</div>
                 )}
               </div>
 
@@ -141,7 +141,7 @@ export const PresetCombobox = ({ field, matched, chosenId }: PresetComboboxProps
                 <>
                   <button
                     type="button"
-                    className="mt-0.5 break-words border-t border-base-300 px-2.5 py-2 text-left text-[13px] text-primary hover:bg-base-200"
+                    className="mt-0.5 break-words border-t border-base-300 px-2.5 py-2 text-left text-sm text-primary hover:bg-base-200"
                     onClick={() => commit(query.trim())}
                   >
                     {t('presets.useCustom', { value: query.trim() })}
@@ -162,7 +162,7 @@ export const PresetCombobox = ({ field, matched, chosenId }: PresetComboboxProps
               {hasValue && (
                 <button
                   type="button"
-                  className="rounded-md px-2.5 py-1.5 text-left text-[12.5px] text-error/80 hover:bg-error/10"
+                  className="rounded-md px-2.5 py-1.5 text-left text-sm text-error/80 hover:bg-error/10"
                   onClick={() => commit('')}
                 >
                   {t('presets.clearValue')}

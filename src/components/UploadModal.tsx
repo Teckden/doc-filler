@@ -80,8 +80,8 @@ export const UploadModal = () => {
       }}
     >
       <div className="modal-box bg-base-100">
-        <h3 className="text-[15px] font-semibold">{t('upload.title')}</h3>
-        <p className="mt-1 text-[13px] leading-relaxed text-base-content/65">
+        <h3 className="text-base font-semibold">{t('upload.title')}</h3>
+        <p className="mt-1 text-sm leading-relaxed text-base-content/65">
           <Trans
             i18nKey="upload.body"
             components={transComponents}

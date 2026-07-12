@@ -29,8 +29,8 @@ export const TemplateSwitcher = () => {
         {/* Fixed-width trigger: the name column fills and truncates so a long title
             never stretches the navbar; the chevron stays pinned to the right. */}
         <span className="flex min-w-0 flex-1 flex-col items-start leading-tight">
-          <span className="w-full truncate text-left text-[13px] font-semibold">{name}</span>
-          <span className="w-full truncate text-left text-[10px] text-base-content/55">
+          <span className="w-full truncate text-left text-sm font-semibold">{name}</span>
+          <span className="w-full truncate text-left text-xs text-base-content/55">
             {t('templates.fieldCount', { count: activeTemplate.fields.length })}
           </span>
         </span>

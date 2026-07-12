@@ -18,8 +18,8 @@ export const Workspace = () => {
   return (
     <div className="@container w-full px-6 py-8 sm:px-10">
       <header className="space-y-1">
-        <h1 className="text-[15px] font-semibold">{t('workspace.title')}</h1>
-        <p className="break-words text-[12.5px] text-base-content/60">
+        <h1 className="text-base font-semibold">{t('workspace.title')}</h1>
+        <p className="break-words text-sm text-base-content/60">
           <Trans
             i18nKey="workspace.subtitle"
             components={{ b: <span className="font-medium" /> }}

@@ -26,8 +26,8 @@ export const ClearFieldsModal = () => {
   return (
     <dialog ref={dialogRef} className="modal" onClose={closeModal}>
       <div className="modal-box bg-base-100">
-        <h3 className="text-[15px] font-semibold">{t('clear.title')}</h3>
-        <p className="mt-1 text-[13px] leading-relaxed text-base-content/65">{t('clear.body')}</p>
+        <h3 className="text-base font-semibold">{t('clear.title')}</h3>
+        <p className="mt-1 text-sm leading-relaxed text-base-content/65">{t('clear.body')}</p>
 
         <div className="modal-action">
           <button type="button" className="btn btn-ghost btn-sm" onClick={closeModal}>
