@@ -137,6 +137,44 @@ export const en = {
     pickOne_one: '{{count}} preset matches — pick one',
     pickOne_other: '{{count}} presets match — pick one',
   },
+  presetsHelp: {
+    title: 'How field presets work',
+    intro:
+      'A preset is a reusable list of options bound to a field name. Whenever a template field with that name appears, it turns into a dropdown — pick a value instead of typing it.',
+    step1Title: 'Create',
+    step1Body: 'Open Presets in the top bar, add a preset, and list its options — one per line.',
+    step2Title: 'Fill',
+    step2Body: 'Every field whose name matches the preset becomes a dropdown with those options.',
+    step3Title: 'Share',
+    step3Body:
+      'Export all presets as a YAML file and import it on another device or from a colleague.',
+    createTitle: 'Creating a preset',
+    createBody:
+      'Give it a name, enter the field name it applies to (the input suggests fields detected in your templates), and add options one per line. Turn “Allow custom entry” off to restrict the field strictly to the list.',
+    fillTitle: 'Filling a field',
+    fillBody:
+      'Click the field to open the list. Type to filter it, or type a new value and press Enter to use it — values outside the list get a “custom” mark, and “Clear value” empties the field.',
+    fillListOnly: 'When custom entry is off, there is no search box — only the list.',
+    multiTitle: 'Several presets on one field',
+    multiBody:
+      'When two or more presets bind to the same field name, their cards show a “shared name” badge and the dropdown asks which preset should feed the field. Your choice is remembered.',
+    libraryTitle: 'The library',
+    libraryBody:
+      'The Presets button in the top bar shows how many presets you have and opens the library. Each card shows the bound field name, the first few options, and whether custom entry is allowed.',
+    yamlTitle: 'Sharing as YAML',
+    yamlBody:
+      'Export downloads every preset as one readable .yaml file you can edit in any text editor. Import accepts such a file and updates presets that match by name and field, so re-importing never creates duplicates.',
+    knowTitle: 'Good to know',
+    know1: 'Presets are stored locally in your browser and apply across all your templates.',
+    know2: 'Deleting a preset never touches values already entered into fields.',
+    know3: 'The badge next to a field label shows which preset supplies its options.',
+    know4: 'Matching is by exact field name, ignoring letter case.',
+    altNavbar: 'The Presets button in the top bar',
+    altLibrary: 'The preset library',
+    altEditor: 'The preset editor',
+    altCombobox: 'A field with a preset dropdown',
+    altMulti: 'Choosing between two presets on one field',
+  },
   footer: {
     source: 'Source code',
   },

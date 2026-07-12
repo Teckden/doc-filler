@@ -6,6 +6,7 @@ export type ActiveModal =
   | { type: 'upload' }
   | { type: 'rename'; templateId: string }
   | { type: 'clearFields' }
+  | { type: 'presetsHelp' }
   | null
 
 export type ToastTone = 'success' | 'error'
