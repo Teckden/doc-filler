@@ -5,9 +5,11 @@ import { HelpModal } from './HelpModal'
 import { TemplateSwitcher } from './TemplateSwitcher'
 import { TemplateList } from './TemplateList'
 import { ExportButton } from './ExportButton'
-import { PanelRightIcon } from './icons'
+import { BookmarkIcon, PanelRightIcon } from './icons'
 import { useTheme } from '../hooks/useTheme'
 import { useTemplates } from '../hooks/useTemplates'
+import { usePresets } from '../hooks/usePresets'
+import { useAppState } from '../contexts/AppStateContext'
 
 type NavbarProps = {
   previewVisible: boolean
@@ -18,6 +20,8 @@ export const Navbar = ({ previewVisible, onTogglePreview }: NavbarProps) => {
   const { t } = useTranslation()
   const [theme, setTheme] = useTheme()
   const { activeTemplate } = useTemplates()
+  const { presets } = usePresets()
+  const { openPresetsPanel } = useAppState()
 
   return (
     <nav className="relative z-30 flex h-14 shrink-0 items-center gap-2 border-b border-base-300 bg-base-100 px-3 sm:gap-2.5 sm:px-4">
@@ -43,6 +47,23 @@ export const Navbar = ({ previewVisible, onTogglePreview }: NavbarProps) => {
         >
           <PanelRightIcon className="size-4 opacity-70" />
           <span>{t(previewVisible ? 'preview.hide' : 'preview.show')}</span>
+        </button>
+      )}
+
+      {activeTemplate && (
+        <button
+          type="button"
+          className="btn btn-ghost btn-sm gap-1.5"
+          onClick={() => openPresetsPanel()}
+          title={t('presets.title')}
+        >
+          <BookmarkIcon className="size-4 opacity-70" />
+          <span className="hidden lg:inline">{t('presets.button')}</span>
+          {presets.length > 0 && (
+            <span className="badge badge-neutral badge-xs font-medium tabular-nums">
+              {presets.length}
+            </span>
+          )}
         </button>
       )}
 

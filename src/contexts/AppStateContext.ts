@@ -15,6 +15,10 @@ export type AppStateContextValue = {
   activeModal: ActiveModal
   openModal: (modal: ActiveModal) => void
   closeModal: () => void
+  // NOTE: If drawer will be growing in types then convert it into modal system as well
+  presetsPanelOpen: boolean
+  openPresetsPanel: () => void
+  closePresetsPanel: () => void
   toasts: Toast[]
   notify: (message: string, tone?: ToastTone) => void
 }

@@ -1,5 +1,7 @@
 import Dexie, { type Table } from 'dexie'
 import { extractFields } from '../lib/docx'
+// Type-only import: presets.ts imports `db` from here at runtime, so the cycle stays compile-time only.
+import type { StoredPreset, StoredPresetChoice } from './presets'
 
 // A template the user uploaded, stored verbatim in IndexedDB. The raw .docx is
 // kept as a Blob (never base64) and re-fed to docx-templates at export time via
@@ -37,6 +39,8 @@ class DocFillerDB extends Dexie {
   templates!: Table<StoredTemplate, string>
   meta!: Table<MetaRow, string>
   fieldValues!: Table<StoredFieldValues, string>
+  presets!: Table<StoredPreset, string>
+  presetChoices!: Table<StoredPresetChoice, string>
 
   constructor() {
     super('docfiller')
@@ -51,6 +55,12 @@ class DocFillerDB extends Dexie {
     // intact with no migration logic.
     this.version(2).stores({
       fieldValues: 'templateId',
+    })
+    // Schema v3 — additive again: the field-preset library and the per-field
+    // choice of which preset feeds a field when several bind to the same name.
+    this.version(3).stores({
+      presets: 'id, fieldKey, createdAt',
+      presetChoices: 'fieldKey, presetId',
     })
   }
 }

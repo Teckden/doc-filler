@@ -4,6 +4,7 @@ import { EmptyState } from './components/EmptyState'
 import { Workspace } from './components/Workspace'
 import { PreviewPane } from './components/PreviewPane'
 import { ModalHost } from './components/ModalHost'
+import { PresetsDrawer } from './components/PresetsDrawer'
 import { Toaster } from './components/Toaster'
 import { useTemplates } from './hooks/useTemplates'
 import { usePreviewVisible } from './hooks/usePreviewVisible'
@@ -49,6 +50,7 @@ export const App = () => {
       <Footer />
 
       <ModalHost />
+      <PresetsDrawer />
       <Toaster />
     </div>
   )
