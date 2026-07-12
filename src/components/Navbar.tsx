@@ -24,7 +24,7 @@ export const Navbar = ({ previewVisible, onTogglePreview }: NavbarProps) => {
   const { openPresetsPanel } = useAppState()
 
   return (
-    <nav className="relative z-30 flex h-14 shrink-0 items-center gap-2 border-b border-base-300 bg-base-100 px-3 sm:gap-2.5 sm:px-4">
+    <nav className="sticky top-0 z-30 flex h-14 shrink-0 items-center gap-2 border-b border-base-300 bg-base-100 px-3 sm:gap-2.5 sm:px-4">
       <div className="flex items-center gap-2.5">
         <div className="grid size-7 place-items-center rounded bg-primary text-xs font-bold tracking-tight text-primary-content">
           DF

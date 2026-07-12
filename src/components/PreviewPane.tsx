@@ -11,7 +11,7 @@ export const PreviewPane = ({ template }: { template: StoredTemplate }) => {
   const { hostRef, docRef, status } = useDocxPreview(template, values)
 
   return (
-    <section className="min-w-0 flex-1 overflow-y-auto bg-base-300/70">
+    <section className="sticky top-14 h-[calc(100dvh-3.5rem)] min-w-0 flex-1 self-start overflow-y-auto bg-base-300/70">
       <div className="sticky top-0 z-10 flex h-11 items-center justify-between border-b border-base-content/5 bg-base-300/80 px-6 backdrop-blur">
         <span className="text-xs font-medium uppercase tracking-[0.1em] opacity-55">
           {t('preview.title')}

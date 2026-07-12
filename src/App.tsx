@@ -16,25 +16,25 @@ export const App = () => {
   const [previewVisible, setPreviewVisible] = usePreviewVisible()
 
   return (
-    <div className="flex h-screen flex-col bg-base-200 text-base-content">
+    <div className="flex min-h-screen flex-col bg-base-200 text-base-content">
       <Navbar
         previewVisible={previewVisible}
         onTogglePreview={() => setPreviewVisible((visible) => !visible)}
       />
 
-      <main className="flex min-h-0 flex-1">
+      <main className="flex flex-1">
         {loading ? (
           <div className="flex flex-1 items-center justify-center">
             <span className="loading loading-spinner loading-md text-base-content/40"></span>
           </div>
         ) : !activeTemplate ? (
-          <div className="flex-1 overflow-y-auto">
+          <div className="flex-1">
             <EmptyState onUpload={() => openModal({ type: 'upload' })} />
           </div>
         ) : (
           <>
             <section
-              className={`min-w-0 flex-1 overflow-y-auto ${previewVisible ? 'border-r border-base-300' : ''}`}
+              className={`min-w-0 flex-1 ${previewVisible ? 'border-r border-base-300' : ''}`}
             >
               <div
                 className={`mx-auto w-full ${previewVisible ? 'max-w-[680px]' : 'max-w-[880px]'}`}
