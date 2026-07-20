@@ -6,6 +6,7 @@ import { PreviewPane } from './components/PreviewPane'
 import { ModalHost } from './components/ModalHost'
 import { PresetsDrawer } from './components/PresetsDrawer'
 import { Toaster } from './components/Toaster'
+import { CeremonyOverlay, ServiceStrap } from './components/ServiceRecord'
 import { useTemplates } from './hooks/useTemplates'
 import { usePreviewVisible } from './hooks/usePreviewVisible'
 import { useAppState } from './contexts/AppStateContext'
@@ -49,9 +50,11 @@ export const App = () => {
 
       <Footer />
 
+      <ServiceStrap />
       <ModalHost />
       <PresetsDrawer />
       <Toaster />
+      <CeremonyOverlay />
     </div>
   )
 }

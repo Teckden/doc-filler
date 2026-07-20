@@ -2,10 +2,12 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { saveAs } from 'file-saver'
 import { fillTemplate } from '../lib/docx'
+import { isFieldFilled } from '../helpers/isFieldFilled'
 import { templateDisplayName } from '../i18n/displayName'
 import { DownloadIcon } from './icons'
 import { useFieldValues } from '../contexts/FieldValuesContext'
 import { useAppState } from '../contexts/AppStateContext'
+import { ActivityEvents } from '../events/ActivityEvents'
 import { useTemplates } from '../hooks/useTemplates'
 
 const DOCX_MIME = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
@@ -36,6 +38,13 @@ export const ExportButton = ({
       // in the browser it's always a plain ArrayBuffer, safe for a Blob.
       const blob = new Blob([report as Uint8Array<ArrayBuffer>], { type: DOCX_MIME })
       saveAs(blob, t('export.filename', { name: templateDisplayName(activeTemplate.name, t) }))
+      ActivityEvents.emit({
+        type: 'export',
+        perfect:
+          activeTemplate.fields.length > 0 &&
+          activeTemplate.fields.every((field) => isFieldFilled(values[field])),
+        dark: document.documentElement.getAttribute('data-theme') === 'dark',
+      })
     } catch (error) {
       notify(error instanceof Error ? error.message : t('export.failed'), 'error')
     } finally {

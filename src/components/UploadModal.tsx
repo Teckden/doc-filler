@@ -3,6 +3,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import { UploadIcon } from './icons'
 import { templateDisplayName } from '../i18n/displayName'
 import { useAppState } from '../contexts/AppStateContext'
+import { ActivityEvents } from '../events/ActivityEvents'
 import { useTemplates } from '../hooks/useTemplates'
 
 const transComponents = {
@@ -58,6 +59,7 @@ export const UploadModal = () => {
       const record = await add(file)
       const count = record.fields.length
       notify(t('upload.added', { name: templateDisplayName(record.name, t), count }))
+      ActivityEvents.emit({ type: 'upload' })
       reset()
       closeModal()
     } catch (err) {

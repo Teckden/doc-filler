@@ -2,6 +2,11 @@ import Dexie, { type Table } from 'dexie'
 import { extractFields } from '../lib/docx'
 // Type-only import: presets.ts imports `db` from here at runtime, so the cycle stays compile-time only.
 import type { StoredPreset, StoredPresetChoice } from './presets'
+import {
+  initialServiceRecord,
+  SERVICE_RECORD_KEY,
+  type ServiceRecordI,
+} from '../models/ServiceRecord'
 
 // A template the user uploaded, stored verbatim in IndexedDB. The raw .docx is
 // kept as a Blob (never base64) and re-fed to docx-templates at export time via
@@ -41,6 +46,7 @@ class DocFillerDB extends Dexie {
   fieldValues!: Table<StoredFieldValues, string>
   presets!: Table<StoredPreset, string>
   presetChoices!: Table<StoredPresetChoice, string>
+  serviceRecord!: Table<ServiceRecordI, string>
 
   constructor() {
     super('docfiller')
@@ -62,10 +68,17 @@ class DocFillerDB extends Dexie {
       presets: 'id, fieldKey, createdAt',
       presetChoices: 'fieldKey, presetId',
     })
+    this.version(4).stores({
+      serviceRecord: '',
+    })
   }
 }
 
 export const db = new DocFillerDB()
+
+db.on('populate', (tx) => {
+  void tx.table('serviceRecord').add(initialServiceRecord, SERVICE_RECORD_KEY)
+})
 
 const stripExtension = (fileName: string): string => fileName.replace(/\.docx$/i, '')
 

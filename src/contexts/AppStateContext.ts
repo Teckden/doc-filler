@@ -7,6 +7,7 @@ export type ActiveModal =
   | { type: 'rename'; templateId: string }
   | { type: 'clearFields' }
   | { type: 'presetsHelp' }
+  | { type: 'serviceRecord' }
   | null
 
 export type ToastTone = 'success' | 'error'

@@ -3,6 +3,7 @@ import { UploadModal } from './UploadModal'
 import { RenameModal } from './RenameModal'
 import { ClearFieldsModal } from './ClearFieldsModal'
 import { PresetsHelpModal } from './PresetsHelpModal'
+import { ServiceRecordModal } from './ServiceRecord'
 
 export const ModalHost = () => {
   const { activeModal } = useAppState()
@@ -12,6 +13,7 @@ export const ModalHost = () => {
       {activeModal?.type === 'rename' && <RenameModal />}
       {activeModal?.type === 'clearFields' && <ClearFieldsModal />}
       {activeModal?.type === 'presetsHelp' && <PresetsHelpModal />}
+      {activeModal?.type === 'serviceRecord' && <ServiceRecordModal />}
     </>
   )
 }

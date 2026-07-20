@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAppState } from '../../../contexts/AppStateContext'
+import { ActivityEvents } from '../../../events/ActivityEvents'
 import { addPreset, updatePreset, type PresetInput, type StoredPreset } from '../../../db/presets'
 import { draftFromPreset, emptyDraft, parseDraftOptions, type PresetDraft } from '../draft'
 
@@ -27,8 +28,12 @@ export const usePresetDraft = (): UsePresetDraft => {
       allowManual: draft.allowManual,
       options: parseDraftOptions(draft.optionsText),
     }
-    if (draft.id) await updatePreset(draft.id, input)
-    else await addPreset(input)
+    if (draft.id) {
+      await updatePreset(draft.id, input)
+    } else {
+      await addPreset(input)
+      ActivityEvents.emit({ type: 'preset' })
+    }
     setDraft(null)
     notify(t('presets.saved'))
   }

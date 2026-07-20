@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAppState } from '../contexts/AppStateContext'
 import { useFieldValues } from '../contexts/FieldValuesContext'
+import { ActivityEvents } from '../events/ActivityEvents'
 
 export const ClearFieldsModal = () => {
   const { t } = useTranslation()
@@ -20,6 +21,7 @@ export const ClearFieldsModal = () => {
 
   const confirm = () => {
     reset()
+    ActivityEvents.emit({ type: 'clear' })
     closeModal()
   }
 

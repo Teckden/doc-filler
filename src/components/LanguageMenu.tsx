@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { SUPPORTED_LOCALES, type Locale } from '../i18n/config'
+import { ActivityEvents } from '../events/ActivityEvents'
 import { CheckIcon, ChevronDownIcon, GlobeIcon } from './icons'
 
 // Endonyms stay constant regardless of the active UI language, so they live here
@@ -20,6 +21,7 @@ export const LanguageMenu = () => {
   const current: Locale = i18n.resolvedLanguage === 'uk' ? 'uk' : 'en'
 
   const change = (locale: Locale) => {
+    if (locale !== current) ActivityEvents.emit({ type: 'langSwitch' })
     void i18n.changeLanguage(locale)
     closeDropdown()
   }

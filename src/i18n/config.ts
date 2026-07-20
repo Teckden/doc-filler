@@ -4,12 +4,16 @@ import { resources } from './resources'
 
 export const SUPPORTED_LOCALES = ['en', 'uk'] as const
 export type Locale = (typeof SUPPORTED_LOCALES)[number]
+export type LocalizedText = Record<Locale, string>
 
 const STORAGE_KEY = 'docfiller.locale'
 const DEFAULT_LOCALE: Locale = 'en'
 
 const isLocale = (value: string | null): value is Locale =>
   value !== null && (SUPPORTED_LOCALES as readonly string[]).includes(value)
+
+export const resolveLocale = (value: string | null | undefined): Locale =>
+  isLocale(value ?? null) ? (value as Locale) : DEFAULT_LOCALE
 
 // First visit defaults to English (like the theme defaults to light); after
 // that the stored choice always wins. No navigator.language detection by design.

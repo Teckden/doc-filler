@@ -1,12 +1,13 @@
 import { useTranslation } from 'react-i18next'
 import { useFieldValues } from '../contexts/FieldValuesContext'
+import { isFieldFilled } from '../helpers/isFieldFilled'
 
 // Consumes field values directly so it re-renders on each keystroke without
 // dragging the rest of the workspace with it.
 export const ProgressBar = ({ fields }: { fields: string[] }) => {
   const { t } = useTranslation()
   const { values } = useFieldValues()
-  const filled = fields.filter((field) => (values[field] ?? '').trim() !== '').length
+  const filled = fields.filter((field) => isFieldFilled(values[field])).length
   const progress = fields.length === 0 ? 0 : Math.round((filled / fields.length) * 100)
 
   return (

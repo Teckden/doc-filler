@@ -2,6 +2,7 @@ import type { ChangeEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { saveAs } from 'file-saver'
 import { useAppState } from '../../../contexts/AppStateContext'
+import { ActivityEvents } from '../../../events/ActivityEvents'
 import { importPresets, type StoredPreset } from '../../../db/presets'
 import { parsePresetPack, serializePresetPack } from '../../../lib/presetPack'
 
@@ -18,6 +19,7 @@ export const usePresetPack = (presets: StoredPreset[]): UsePresetPack => {
     const blob = new Blob([serializePresetPack(presets)], { type: 'text/yaml;charset=utf-8' })
     saveAs(blob, 'field-presets.yaml')
     notify(t('presets.exported', { count: presets.length }))
+    ActivityEvents.emit({ type: 'packExport' })
   }
 
   const importPack = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -32,6 +34,7 @@ export const usePresetPack = (presets: StoredPreset[]): UsePresetPack => {
       }
       const { added, updated } = await importPresets(entries)
       notify(t('presets.imported', { count: added + updated }))
+      ActivityEvents.emit({ type: 'packImport' })
     } catch {
       notify(t('presets.importError'), 'error')
     }

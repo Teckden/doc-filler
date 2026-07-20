@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useAppState } from '../contexts/AppStateContext'
 import { useFieldValues } from '../contexts/FieldValuesContext'
+import { ActivityEvents } from '../events/ActivityEvents'
 import { setPresetChoice, updatePreset, type StoredPreset } from '../db/presets'
 import { BookmarkIcon, PlusIcon } from './icons'
 
@@ -36,10 +37,12 @@ export const PresetCombobox = ({ field, matched, chosenId }: PresetComboboxProps
     setQuery('')
   }
   const commit = (next: string) => {
+    if (next && active.options.includes(next)) ActivityEvents.emit({ type: 'presetApplied' })
     setValue(field, next)
     close()
   }
   const commitAndAdd = async (next: string) => {
+    ActivityEvents.emit({ type: 'presetApplied' })
     await updatePreset(active.id, {
       name: active.name,
       fieldKey: active.fieldKey,
