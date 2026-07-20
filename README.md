@@ -53,6 +53,25 @@ npm run build
 npm run preview
 ```
 
+### Running the tests
+
+End-to-end tests are written with [Playwright](https://playwright.dev): they drive the real app in Chromium, from uploading the `.docx` fixtures in `tests/fixtures/` through filling, exporting, and the Service Record flows. Specs live in `tests/e2e/`, grouped by feature; shared actions sit in `tests/support/`.
+
+First time only, download the test browser:
+
+```bash
+npx playwright install chromium
+```
+
+Then:
+
+```bash
+npm run test:e2e       # headless run
+npm run test:e2e:ui    # interactive UI mode
+```
+
+No setup beyond that — Playwright starts its own dev server on a dedicated origin (`127.0.0.1:5199`, configured in `playwright.config.ts`), so your working data on `localhost:5173` stays untouched and every test begins with an empty IndexedDB. Time-based rules are tested with Playwright's fake clock instead of real waiting. The suite also runs on every commit via lefthook.
+
 ## Usage
 
 1. Open the app and upload a `.docx` template containing placeholder fields.

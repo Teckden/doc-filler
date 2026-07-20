@@ -9,3 +9,5 @@ pre-commit:
       run: npx prettier --check {staged_files}
     typecheck:
       run: npx tsc -b --noEmit
+    e2e:
+      run: npm run test:e2e
