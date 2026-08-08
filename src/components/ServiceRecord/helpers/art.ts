@@ -13,7 +13,7 @@ const STRAP_DIMS: Record<StrapSize, [number, number]> = {
   desk: [58, 78],
 }
 
-export const INSIGNIA_WIDTHS: Record<StrapSize, number> = { sm: 14, lg: 30, xl: 50, desk: 38 }
+export const INSIGNIA_WIDTHS: Record<StrapSize, number> = { sm: 18, lg: 38, xl: 64, desk: 48 }
 
 export const strapStyle = (rank: number, size: StrapSize): CSSProperties => {
   const [width, height] = STRAP_DIMS[size]

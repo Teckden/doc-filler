@@ -1,5 +1,8 @@
 import type { ReactNode } from 'react'
 import { GOLD, INSIGNIA_WIDTHS, type StrapSize } from './helpers/art'
+import { OfficerStar } from './OfficerStar'
+import { OfficerBraid } from './OfficerBraid'
+import { OfficerMaces } from './OfficerMaces'
 
 const chevron = (y: number, strokeWidth: number, halfWidth: number): ReactNode => (
   <path
@@ -13,47 +16,52 @@ const chevron = (y: number, strokeWidth: number, halfWidth: number): ReactNode =
   />
 )
 
-const star = (cy: number, r: number): ReactNode => (
+const rocker = (y: number, halfWidth: number): ReactNode => (
   <path
-    key={`s${cy}`}
-    d={`M20 ${cy - r} L${20 + r * 0.26} ${cy - r * 0.26} L${20 + r} ${cy} L${20 + r * 0.26} ${cy + r * 0.26} L20 ${cy + r} L${20 - r * 0.26} ${cy + r * 0.26} L${20 - r} ${cy} L${20 - r * 0.26} ${cy - r * 0.26} Z`}
-    fill={GOLD}
+    key={`a${y}`}
+    d={`M${20 - halfWidth} ${y} Q20 ${y + 6} ${20 + halfWidth} ${y}`}
+    stroke={GOLD}
+    strokeWidth={3.2}
+    fill="none"
+    strokeLinecap="round"
   />
 )
+
+const star = (cy: number, r: number): ReactNode => (
+  <OfficerStar key={`s${cy}`} cx={20} cy={cy} size={r * 2} />
+)
+
+const braid = (): ReactNode => <OfficerBraid key="p" x={4} y={44} width={32} />
+
+const maces = (): ReactNode => <OfficerMaces key="m" x={9} y={35.4} width={22} />
 
 export const StrapInsignia = ({ rank, size }: { rank: number; size: StrapSize }) => {
   if (rank <= 0) return null
   const width = INSIGNIA_WIDTHS[size]
   const parts: ReactNode[] = []
-  if (rank === 1) {
-    parts.push(
-      <rect key="r" x={14} y={24} width={12} height={3.4} rx={1.6} fill={GOLD} opacity={0.9} />,
-    )
-  } else if (rank === 2) {
-    parts.push(chevron(28, 3, 9))
-  } else if (rank === 3) {
-    parts.push(chevron(24, 3, 9), chevron(33, 3, 9))
-  } else if (rank <= 8) {
-    const count = Math.min(rank - 3, 3)
-    for (let i = 0; i < count; i++) parts.push(chevron(20 + i * 9, 3.6, 10))
-    if (rank === 7) {
-      parts.push(<rect key="b" x={11} y={46} width={18} height={3.2} rx={1.5} fill={GOLD} />)
-    }
-    if (rank === 8) parts.push(star(11, 5))
-  } else if (rank <= 11) {
-    const count = rank - 8
-    for (let i = 0; i < count; i++) parts.push(star(38 - i * 13, 4.6))
-  } else if (rank <= 14) {
+  if (rank === 2) {
+    parts.push(<rect key="r" x={11} y={26.4} width={18} height={3.2} rx={1.5} fill={GOLD} />)
+  } else if (rank >= 3 && rank <= 6) {
+    const count = rank - 2
+    const bottom = 28 + (count - 1) * 4
+    for (let i = 0; i < count; i++) parts.push(chevron(bottom - i * 8, 3.2, 9))
+  } else if (rank === 7) {
+    for (let i = 0; i < 4; i++) parts.push(chevron(40 - i * 8, 3.2, 9))
+    parts.push(rocker(46, 9))
+  } else if (rank === 8) {
+    parts.push(chevron(14, 3, 9), chevron(33, 6, 13), rocker(45, 11))
+  } else if (rank >= 9 && rank <= 11) {
+    const count = rank === 11 ? 4 : rank - 8
+    const top = 26 - ((count - 1) * 11) / 2
+    for (let i = 0; i < count; i++) parts.push(star(top + i * 11, 5.2))
+  } else if (rank >= 12 && rank <= 14) {
     const count = rank - 11
-    parts.push(
-      <rect key="l1" x={8.5} y={4} width={1.6} height={48} fill={GOLD} opacity={0.55} />,
-      <rect key="l2" x={29.9} y={4} width={1.6} height={48} fill={GOLD} opacity={0.55} />,
-    )
-    for (let i = 0; i < count; i++) parts.push(star(40 - i * 15, 6))
-  } else {
-    const count = rank - 14
-    for (let i = 0; i < count; i++) parts.push(star(34 - i * 16, 7.5))
-    parts.push(chevron(48, 2.6, 9), chevron(53, 2.6, 9))
+    for (let i = 0; i < count; i++) parts.push(star(36 - i * 14, 7))
+    parts.push(braid())
+  } else if (rank >= 15) {
+    const count = rank === 16 ? 4 : 1
+    for (let i = 0; i < count; i++) parts.push(star(29.8 - i * 8.2, 4.8))
+    parts.push(maces())
   }
   return (
     <svg width={width} height={Math.round(width * 1.4)} viewBox="0 0 40 56" aria-hidden="true">
