@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import type { StoredTemplate } from '../../../db/templates'
 import { templateDisplayName } from '../../../i18n/displayName'
+import { formatUploadedDate } from '../../../i18n/uploadedDate'
 import { PencilIcon, PlusIcon, TrashIcon } from '../../icons'
 import { GroupAssignPanel } from './GroupAssignPanel'
 
@@ -29,7 +30,7 @@ export const TemplateRow = ({
   onAssign,
   onRemoveFromGroup,
 }: TemplateRowProps) => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const name = templateDisplayName(template.name, t)
 
   return (
@@ -52,7 +53,7 @@ export const TemplateRow = ({
               {name}
             </div>
             <div className="text-xs text-base-content/55">
-              {t('templates.fieldCount', { count: template.fields.length })}
+              {`${t('templates.fieldCount', { count: template.fields.length })} | ${formatUploadedDate(template.createdAt, i18n.language)}`}
             </div>
           </button>
         </div>

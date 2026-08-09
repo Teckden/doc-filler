@@ -1,12 +1,13 @@
 import { useRef, useState, type CSSProperties, type ToggleEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { templateDisplayName } from '../i18n/displayName'
+import { formatUploadedDate } from '../i18n/uploadedDate'
 import { useTemplates } from '../hooks/useTemplates'
 import { TemplateList } from './TemplateList'
 import { ChevronDownIcon } from './icons'
 
 export const TemplateSwitcher = () => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { activeTemplate } = useTemplates()
   const [open, setOpen] = useState(false)
   const popoverRef = useRef<HTMLUListElement>(null)
@@ -36,7 +37,7 @@ export const TemplateSwitcher = () => {
         <span className="flex min-w-0 flex-1 flex-col items-start leading-tight">
           <span className="w-full truncate text-left text-sm font-semibold">{name}</span>
           <span className="w-full truncate text-left text-xs text-base-content/55">
-            {t('templates.fieldCount', { count: activeTemplate.fields.length })}
+            {`${t('templates.fieldCount', { count: activeTemplate.fields.length })} | ${formatUploadedDate(activeTemplate.createdAt, i18n.language)}`}
           </span>
         </span>
         <ChevronDownIcon className="size-3.5 shrink-0 text-base-content/55" />
