@@ -14,12 +14,13 @@ const transComponents = {
 export const UploadModal = () => {
   const { t } = useTranslation()
   const { activeModal, closeModal, notify } = useAppState()
-  const { add } = useTemplates()
+  const { add, groups, assignToGroup } = useTemplates()
   const open = activeModal?.type === 'upload'
 
   const dialogRef = useRef<HTMLDialogElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [file, setFile] = useState<File | null>(null)
+  const [groupName, setGroupName] = useState('')
   const [dragOver, setDragOver] = useState(false)
   // Parse/validation errors stay local so the modal stays open for a retry.
   const [error, setError] = useState<string | null>(null)
@@ -34,6 +35,7 @@ export const UploadModal = () => {
 
   const reset = () => {
     setFile(null)
+    setGroupName('')
     setDragOver(false)
     setError(null)
     setBusy(false)
@@ -57,6 +59,7 @@ export const UploadModal = () => {
     setBusy(true)
     try {
       const record = await add(file)
+      if (groupName.trim()) await assignToGroup(record.id, groupName).catch(() => undefined)
       const count = record.fields.length
       notify(t('upload.added', { name: templateDisplayName(record.name, t), count }))
       ActivityEvents.emit({ type: 'upload' })
@@ -123,6 +126,24 @@ export const UploadModal = () => {
             </span>
           )}
         </label>
+
+        <fieldset className="fieldset mt-3">
+          <legend className="fieldset-legend">{t('upload.group')}</legend>
+          <input
+            type="text"
+            className="input w-full"
+            value={groupName}
+            onChange={(event) => setGroupName(event.target.value)}
+            placeholder={t('templates.groups.namePlaceholder')}
+            list="upload-group-options"
+          />
+          <datalist id="upload-group-options">
+            {groups.map((group) => (
+              <option key={group} value={group} />
+            ))}
+          </datalist>
+          <p className="fieldset-label">{t('upload.groupHint')}</p>
+        </fieldset>
 
         {error && (
           <div role="alert" className="alert alert-error mt-3">

@@ -1,3 +1,4 @@
+import { useRef, useState, type CSSProperties, type ToggleEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { templateDisplayName } from '../i18n/displayName'
 import { useTemplates } from '../hooks/useTemplates'
@@ -7,6 +8,8 @@ import { ChevronDownIcon } from './icons'
 export const TemplateSwitcher = () => {
   const { t } = useTranslation()
   const { activeTemplate } = useTemplates()
+  const [open, setOpen] = useState(false)
+  const popoverRef = useRef<HTMLUListElement>(null)
 
   if (!activeTemplate) return null
 
@@ -14,17 +17,19 @@ export const TemplateSwitcher = () => {
   const showTooltip = name.length > 22
 
   return (
-    <div className="dropdown">
-      <div
-        tabIndex={0}
-        role="button"
-        className={`btn btn-ghost h-auto min-h-0 w-56 flex-nowrap gap-2 px-2 py-1.5 font-normal${
+    <>
+      <button
+        type="button"
+        popoverTarget="template-menu"
+        style={{ anchorName: '--template-menu' } as CSSProperties}
+        className={
           showTooltip
-            ? ' tooltip tooltip-bottom before:max-w-[15rem] before:whitespace-normal before:break-words'
-            : ''
-        }`}
+            ? 'btn btn-ghost h-auto min-h-0 w-56 flex-nowrap gap-2 px-2 py-1.5 font-normal tooltip tooltip-bottom before:max-w-[15rem] before:whitespace-normal before:break-words'
+            : 'btn btn-ghost h-auto min-h-0 w-56 flex-nowrap gap-2 px-2 py-1.5 font-normal'
+        }
         data-tip={showTooltip ? name : undefined}
         aria-label={t('templates.switch', { name })}
+        aria-expanded={open}
       >
         {/* Fixed-width trigger: the name column fills and truncates so a long title
             never stretches the navbar; the chevron stays pinned to the right. */}
@@ -35,14 +40,19 @@ export const TemplateSwitcher = () => {
           </span>
         </span>
         <ChevronDownIcon className="size-3.5 shrink-0 text-base-content/55" />
-      </div>
+      </button>
 
       <ul
-        tabIndex={0}
-        className="dropdown-content list z-50 mt-2 w-72 rounded-box border border-base-300 bg-base-100 p-1 shadow-lg"
+        ref={popoverRef}
+        popover=""
+        id="template-menu"
+        style={{ positionAnchor: '--template-menu' } as CSSProperties}
+        onToggle={(event: ToggleEvent<HTMLUListElement>) => setOpen(event.newState === 'open')}
+        aria-label={t('navbar.templates')}
+        className="dropdown list mt-2 max-h-[75vh] min-w-72 w-max max-w-100 overflow-y-auto rounded-box border border-base-300 bg-base-100 p-1 shadow-lg"
       >
-        <TemplateList />
+        <TemplateList open={open} onClose={() => popoverRef.current?.hidePopover()} />
       </ul>
-    </div>
+    </>
   )
 }

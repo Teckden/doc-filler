@@ -78,6 +78,22 @@ export const CheckIcon = ({ className }: IconProps) => (
   </svg>
 )
 
+export const SearchIcon = ({ className }: IconProps) => (
+  <svg {...base(className)}>
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+    />
+  </svg>
+)
+
+export const XMarkIcon = ({ className }: IconProps) => (
+  <svg {...base(className)}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+  </svg>
+)
+
 export const PanelRightIcon = ({ className }: IconProps) => (
   <svg {...base(className)}>
     <rect x="3.75" y="4.5" width="16.5" height="15" rx="1.5" />

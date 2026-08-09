@@ -1,6 +1,13 @@
 import { test, expect } from '@playwright/test'
 import { en } from '../../src/i18n/locales/en.ts'
-import { enlist, exportDocument, FIXTURES, INVOICE_FIELDS } from '../support/e2eHelpers.ts'
+import {
+  enlist,
+  exportDocument,
+  FIXTURES,
+  INVOICE_FIELDS,
+  openTemplateMenu,
+  templateMenu,
+} from '../support/e2eHelpers.ts'
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/')
@@ -21,6 +28,18 @@ test('accepts a template with no fields', async ({ page }) => {
   await expect(page.getByText(en.workspace.noFields)).toBeVisible()
   const download = await exportDocument(page)
   expect(download.suggestedFilename()).toBe('filled-no-fields.docx')
+})
+
+test('template menu closes on outside click and Escape', async ({ page }) => {
+  await enlist(page)
+  await openTemplateMenu(page)
+  await expect(templateMenu(page)).toBeVisible()
+  await page.getByRole('heading', { name: en.workspace.title }).click()
+  await expect(templateMenu(page)).toBeHidden()
+  await openTemplateMenu(page)
+  await expect(templateMenu(page)).toBeVisible()
+  await page.keyboard.press('Escape')
+  await expect(templateMenu(page)).toBeHidden()
 })
 
 test('keeps templates across reloads', async ({ page }) => {

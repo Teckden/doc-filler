@@ -17,6 +17,7 @@ export interface StoredTemplate {
   name: string
   blob: Blob
   fields: string[]
+  group?: string
   createdAt: number
   updatedAt: number
 }
@@ -119,6 +120,41 @@ export const deleteTemplate = async (id: string): Promise<void> => {
     await db.templates.delete(id)
     await db.fieldValues.delete(id)
   })
+}
+
+const existingGroupName = async (
+  name: string,
+  exceptGroup?: string,
+): Promise<string | undefined> => {
+  const templates = await db.templates.toArray()
+  return templates
+    .map((template) => template.group)
+    .find(
+      (group): group is string =>
+        !!group && group !== exceptGroup && group.toLowerCase() === name.toLowerCase(),
+    )
+}
+
+export const assignTemplateToGroup = async (
+  templateId: string,
+  groupName: string,
+): Promise<void> => {
+  const cleaned = groupName.trim()
+  if (!cleaned) return
+  const existing = await existingGroupName(cleaned)
+  await db.templates.update(templateId, { group: existing ?? cleaned })
+}
+
+export const removeTemplateFromGroup = async (templateId: string): Promise<void> => {
+  await db.templates.update(templateId, { group: undefined })
+}
+
+export const renameTemplateGroup = async (oldName: string, newName: string): Promise<void> => {
+  const cleaned = newName.trim()
+  if (!cleaned || cleaned === oldName) return
+  const existing = await existingGroupName(cleaned, oldName)
+  const finalName = existing ?? cleaned
+  await db.templates.filter((template) => template.group === oldName).modify({ group: finalName })
 }
 
 export const getFieldValues = async (templateId: string): Promise<Record<string, string>> =>

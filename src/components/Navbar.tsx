@@ -1,3 +1,4 @@
+import { useRef, useState, type CSSProperties, type ToggleEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ThemeToggle } from './ThemeToggle'
 import { LanguageMenu } from './LanguageMenu'
@@ -22,6 +23,8 @@ export const Navbar = ({ previewVisible, onTogglePreview }: NavbarProps) => {
   const { activeTemplate } = useTemplates()
   const { presets } = usePresets()
   const { openPresetsPanel } = useAppState()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const mobileMenuRef = useRef<HTMLDivElement>(null)
 
   return (
     <nav className="sticky top-0 z-30 flex h-14 shrink-0 items-center gap-2 border-b border-base-300 bg-base-100 px-3 sm:gap-2.5 sm:px-4">
@@ -76,12 +79,14 @@ export const Navbar = ({ previewVisible, onTogglePreview }: NavbarProps) => {
       </div>
 
       {/* Mobile: template switching + theme tucked into a hamburger menu */}
-      <div className="dropdown dropdown-end sm:hidden">
-        <div
-          tabIndex={0}
-          role="button"
+      <div className="sm:hidden">
+        <button
+          type="button"
+          popoverTarget="mobile-menu"
+          style={{ anchorName: '--mobile-menu' } as CSSProperties}
           className="btn btn-circle btn-ghost btn-sm"
           aria-label={t('navbar.openMenu')}
+          aria-expanded={mobileMenuOpen}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -98,10 +103,16 @@ export const Navbar = ({ previewVisible, onTogglePreview }: NavbarProps) => {
               d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5"
             />
           </svg>
-        </div>
+        </button>
         <div
-          tabIndex={0}
-          className="dropdown-content z-50 mt-2 max-h-[75vh] w-64 overflow-y-auto rounded-box border border-base-300 bg-base-100 p-3 shadow-lg"
+          ref={mobileMenuRef}
+          popover=""
+          id="mobile-menu"
+          style={{ positionAnchor: '--mobile-menu' } as CSSProperties}
+          onToggle={(event: ToggleEvent<HTMLDivElement>) =>
+            setMobileMenuOpen(event.newState === 'open')
+          }
+          className="dropdown dropdown-end mt-2 max-h-[75vh] w-64 overflow-y-auto rounded-box border border-base-300 bg-base-100 p-3 shadow-lg"
         >
           <p className="mb-2 text-xs font-semibold uppercase tracking-wider opacity-60">
             {t('navbar.theme')}
@@ -113,8 +124,11 @@ export const Navbar = ({ previewVisible, onTogglePreview }: NavbarProps) => {
               <p className="mb-1 text-xs font-semibold uppercase tracking-wider opacity-60">
                 {t('navbar.templates')}
               </p>
-              <ul className="list">
-                <TemplateList />
+              <ul className="list" aria-label={t('navbar.templates')}>
+                <TemplateList
+                  open={mobileMenuOpen}
+                  onClose={() => mobileMenuRef.current?.hidePopover()}
+                />
               </ul>
             </>
           )}
